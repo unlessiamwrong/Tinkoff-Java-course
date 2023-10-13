@@ -19,17 +19,16 @@ public final class Task5 {
 
         if (Integer.parseInt(numStr) == reversedNum) {
             return true;
-        } else {
-            StringBuilder descendantStr = new StringBuilder();
-            for (int i = 0; i < numStr.length(); i += 2) {
-                int summary =
-                    Character.getNumericValue(numStr.charAt(i)) + Character.getNumericValue(numStr.charAt(i + 1));
-                descendantStr.append(summary);
-
-            }
-            int descendantInt = Integer.parseInt(descendantStr.toString());
-            return isPalindromeDescendant(descendantInt);
         }
+        StringBuilder descendantStr = new StringBuilder();
+        for (int i = 0; i < numStr.length(); i += 2) {
+            int summary =
+                Character.getNumericValue(numStr.charAt(i)) + Character.getNumericValue(numStr.charAt(i + 1));
+            descendantStr.append(summary);
+
+        }
+        int descendantInt = Integer.parseInt(descendantStr.toString());
+        return isPalindromeDescendant(descendantInt);
     }
 
     private static int reverseNum(int num) {
