@@ -23,9 +23,9 @@ public class Task1Test {
     void minutesToSeconds_WhenIntTooLarge_ThrowsException_Test() {
         String input = "12345678910";
 
-        Assertions.assertThrows(NumberFormatException.class, () -> {
-            Task1.minutesToSeconds(input);
+        Assertions.assertThrows(NumberFormatException.class, () ->
+            Task1.minutesToSeconds(input)
 
-        });
+        );
     }
 }

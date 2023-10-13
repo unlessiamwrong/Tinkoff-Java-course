@@ -21,10 +21,10 @@ public class Task5Test {
     @DisplayName("Check if number or its descendants are palindrome, expected Exceptions")
     void isPalindromeDescendant_WhenAmountOddOrIntNegative_ThrowsException_Test(int input) {
 
-        Assertions.assertThrows(NumberFormatException.class, () -> {
-            Task5.isPalindromeDescendant(input);
+        Assertions.assertThrows(NumberFormatException.class, () ->
+            Task5.isPalindromeDescendant(input)
 
-        });
+        );
     }
 }
 

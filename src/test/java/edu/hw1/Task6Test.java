@@ -19,9 +19,9 @@ public class Task6Test {
     @DisplayName("Count amount of steps to make Kaprekar's number, expected Exception")
     void countK_IfIntLessThanRequired_ThrowsException_Test() {
         int input = 1000;
-        Assertions.assertThrows(NumberFormatException.class, () -> {
-            Task6.countK(input);
+        Assertions.assertThrows(NumberFormatException.class, () ->
+            Task6.countK(input)
 
-        });
+        );
     }
 }

@@ -46,14 +46,14 @@ public class Task7Test {
         int firstInput = -17;
         int secondInput = -2;
 
-        Assertions.assertThrows(NumberFormatException.class, () -> {
-            Task7.rotateRight(firstInput, secondInput);
+        Assertions.assertThrows(NumberFormatException.class, () ->
+            Task7.rotateRight(firstInput, secondInput)
 
-        });
+        );
 
-        Assertions.assertThrows(NumberFormatException.class, () -> {
-            Task7.rotateLeft(firstInput, secondInput);
+        Assertions.assertThrows(NumberFormatException.class, () ->
+            Task7.rotateLeft(firstInput, secondInput)
 
-        });
+        );
     }
 }
