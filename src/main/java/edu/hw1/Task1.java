@@ -2,12 +2,15 @@ package edu.hw1;
 
 @SuppressWarnings("MagicNumber")
 public final class Task1 {
-    static int secondsInMinute = 60;
 
     private Task1() {
     }
 
     public static int minutesToSeconds(String minutes) {
+        if (minutes.length() > 10) {
+            throw new NumberFormatException("The number is too large");
+
+        }
         int colonIndex = minutes.indexOf(":");
         if (colonIndex == -1) {
             return -1;
@@ -18,9 +21,9 @@ public final class Task1 {
             return -1;
         }
         int secondsBeforeConverting = Integer.parseInt(minutes.substring(colonIndex + 1));
-        if (secondsBeforeConverting >= secondsInMinute) {
+        if (secondsBeforeConverting >= 60) {
             return -1;
         }
-        return Integer.parseInt(minutes.substring(0, colonIndex)) * secondsInMinute + secondsBeforeConverting;
+        return Integer.parseInt(minutes.substring(0, colonIndex)) * 60 + secondsBeforeConverting;
     }
 }

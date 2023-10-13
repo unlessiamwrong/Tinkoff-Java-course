@@ -8,13 +8,13 @@ public class Task6 {
     private Task6() {
     }
 
-    public static int countK(int n) throws Exception {
+    public static int countK(int n) throws NumberFormatException {
         return helper(n, 0);
     }
 
-    private static int helper(int n, int counter) throws Exception {
+    private static int helper(int n, int counter) throws NumberFormatException {
         if (n <= 1000) {
-            throw new Exception("Number should be greater than 1000");
+            throw new NumberFormatException("Number should be greater than 1000");
         }
         int length = (int) (Math.log10(n) + 1);
         var list = new int[length];

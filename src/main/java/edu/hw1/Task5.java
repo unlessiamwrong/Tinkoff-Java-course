@@ -5,23 +5,19 @@ public final class Task5 {
     private Task5() {
     }
 
-    public static boolean isPalindromeDescendant(int num) throws Exception {
+    public static boolean isPalindromeDescendant(int num) throws NumberFormatException {
         if (num < 0) {
-            throw new Exception("Only positive numbers are allowed");
+            throw new NumberFormatException("Only positive numbers are allowed");
         }
         String numStr = String.valueOf(num);
         if (numStr.length() % 2 != 0) {
-            throw new Exception("Only even amount of digits is allowed");
+            throw new NumberFormatException("Only even amount of digits is allowed");
         }
         int numInt = Integer.parseInt(numStr);
-        int reversed = 0;
-        while (numInt > 0) {
-            int lastDigit = numInt % 10;
-            reversed = reversed * 10 + lastDigit;
-            numInt /= 10;
-        }
 
-        if (Integer.parseInt(numStr) == reversed) {
+        int reversedNum = reverseNum(numInt);
+
+        if (Integer.parseInt(numStr) == reversedNum) {
             return true;
         } else {
             StringBuilder descendantStr = new StringBuilder();
@@ -34,5 +30,16 @@ public final class Task5 {
             int descendantInt = Integer.parseInt(descendantStr.toString());
             return isPalindromeDescendant(descendantInt);
         }
+    }
+
+    private static int reverseNum(int num) {
+        int reversed = 0;
+        int mutableNum = num;
+        while (mutableNum > 0) {
+            int lastDigit = mutableNum % 10;
+            reversed = reversed * 10 + lastDigit;
+            mutableNum /= 10;
+        }
+        return reversed;
     }
 }

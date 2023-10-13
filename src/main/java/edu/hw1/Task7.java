@@ -2,15 +2,15 @@ package edu.hw1;
 
 public class Task7 {
 
-    static String exceptionMessage = "Only positive values for n and shift are allowed";
+    static final String EXCEPTION_MESSAGE = "Only positive values for 'n' and 'shift' are allowed";
 
     private Task7() {
 
     }
 
-    public static int rotateLeft(int n, int shift) throws Exception {
+    public static int rotateLeft(int n, int shift) throws NumberFormatException {
         if ((n <= 0) | (shift <= 0)) {
-            throw new Exception(exceptionMessage);
+            throw new NumberFormatException(EXCEPTION_MESSAGE);
         }
         String nBit = Integer.toBinaryString(n);
 
@@ -31,9 +31,9 @@ public class Task7 {
         return Integer.parseInt(result.toString(), 2);
     }
 
-    public static int rotateRight(int n, int shift) throws Exception {
+    public static int rotateRight(int n, int shift) throws NumberFormatException {
         if ((n <= 0) | (shift <= 0)) {
-            throw new Exception(exceptionMessage);
+            throw new NumberFormatException(EXCEPTION_MESSAGE);
         }
         String nBit = Integer.toBinaryString(n);
 
