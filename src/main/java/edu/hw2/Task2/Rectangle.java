@@ -7,11 +7,11 @@ public class Rectangle {
     public Rectangle() {
         this(0, 0);
     }
+
     public Rectangle(int height, int width) {
         this.height = height;
         this.width = width;
     }
-
 
     public Rectangle setWidth(int width) {
         return new Rectangle(this.height, width);

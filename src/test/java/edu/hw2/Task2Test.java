@@ -7,9 +7,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class Task2Test{
+public class Task2Test {
     static Arguments[] rectangles() {
-        return new Arguments[]{
+        return new Arguments[] {
             Arguments.of(new Rectangle()),
             Arguments.of(new Square())
         };
@@ -18,9 +18,9 @@ public class Task2Test{
     @ParameterizedTest
     @MethodSource("rectangles")
     void rectangleArea(Rectangle rect) {
-        var rec = rect.setWidth(20);
-        rec = rect.setHeight(10);
+        Rectangle result = rect.setWidth(20);
+        result = result.setHeight(10);
 
-        assertThat(rec.area()).isEqualTo(200);
+        assertThat(result.area()).isEqualTo(200);
     }
 }
