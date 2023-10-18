@@ -28,9 +28,9 @@ public class Task3Test {
 
     @Test
     @DisplayName("Check if one array can be nestable to another, corner cases")
-    void isNestable_CornerCases_Test(){
-        int [] firstInput = new int[]{};
-        int [] secondInput = new int[]{};
+    void isNestable_CornerCases_Test() {
+        int[] firstInput = new int[] {};
+        int[] secondInput = new int[] {};
 
         assertThat(Task3.isNestable(firstInput, secondInput)).isFalse();
     }
