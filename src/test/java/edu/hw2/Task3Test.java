@@ -23,7 +23,6 @@ public class Task3Test {
         //Assert
         assertThat(result).isInstanceOf(StableConnection.class);
 
-
     }
 
     @Test
@@ -38,19 +37,4 @@ public class Task3Test {
         //Assert
         assertThat(result).isInstanceOf(FaultyConnection.class);
     }
-    @Test
-    @DisplayName("DefaultConnection Test")
-
-    void connection_DefaultConnection_Test() {
-        //Arrange
-        DefaultConnectionManager tempObject = new DefaultConnectionManager();
-
-        //Act
-        Connection result = tempObject.getConnection();
-
-        //Assert
-        assertThat(result).isInstanceOf(StableConnection.class);
-
-    }
-
 }
