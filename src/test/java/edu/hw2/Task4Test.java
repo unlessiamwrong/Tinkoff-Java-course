@@ -10,8 +10,15 @@ public class Task4Test {
     @Test
     @DisplayName("Creation of Object Test")
     void callingInfo_GetClassAndMethodeNames_Test() {
+        //Arrange
         CallingInfo tempObject = CallingInfo.callingInfo();
-        assertThat(tempObject.className()).isEqualTo("edu.hw2.Task4Test");
-        assertThat(tempObject.methodName()).isEqualTo("callingInfo_GetClassAndMethodeNames_Test");
+
+        //Act
+        String resultOne = tempObject.className();
+        String resultTwo = tempObject.methodName();
+
+        //Assert
+        assertThat(resultOne).isEqualTo("edu.hw2.Task4Test");
+        assertThat(resultTwo).isEqualTo("callingInfo_GetClassAndMethodeNames_Test");
     }
 }

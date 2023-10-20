@@ -1,51 +1,88 @@
 package edu.hw2;
 
-import edu.hw2.Task1.Expr.Addition;
-import edu.hw2.Task1.Expr.Constant;
-import edu.hw2.Task1.Expr.Exponent;
-import edu.hw2.Task1.Expr.Multiplication;
-import edu.hw2.Task1.Expr.Negate;
+
+import edu.hw2.Task1.Exponent;
+import edu.hw2.Task1.Expr;
+import edu.hw2.Task1.Negate;
+import edu.hw2.Task1.Addition;
+import edu.hw2.Task1.Multiplication;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import edu.hw2.Task1.Constant;
+
 
 public class Task1Test {
+
+
 
     @Test
     @DisplayName("Creation of Object Test")
     void expr_CreateObject_Test() {
-        Constant tempObject = new Constant(2);
-        assertThat(tempObject).isInstanceOf(Constant.class);
+        //Arrange
+        Expr tempObject = new Constant(2);
+
+        //Act
+        double result = tempObject.evaluate();
+
+        //Assert
+        assertThat(result).isEqualTo(2);
     }
 
     @Test
     @DisplayName("Negate of Value Test")
     void expr_NegateValue_Test() {
-        Negate tempObject = new Negate(new Constant(1));
-        assertThat(tempObject.evaluate()).isEqualTo(-1);
+        //Arrange
+        Expr tempObject = new Negate(new Constant(2));
+
+        //Act
+        double result = tempObject.evaluate();
+
+        //Assert
+        assertThat(result).isEqualTo(-2);
     }
 
     @Test
     @DisplayName("Addition of Values Test")
     void expr_AdditionValues_Test() {
-        Addition tempObject = new Addition(new Constant(2), new Constant(4));
+        //Arrange
+        Expr tempObjectOne = new Constant(2);
+        Expr tempObjectTwo = new Constant(3);
+        Expr addition = new Addition(tempObjectOne, tempObjectTwo);
 
-        assertThat(tempObject.evaluate()).isEqualTo(6);
+        //Act
+        double result = addition.evaluate();
+
+        //Assert
+        assertThat(result).isEqualTo(5);
     }
 
     @Test
     @DisplayName("Multiplication of Values Test")
     void expr_MultiplicationValues_Test() {
-        Multiplication tempObject = new Multiplication(new Constant(2), new Constant(4));
+        //Arrange
+        Expr tempObjectOne = new Constant(2);
+        Expr tempObjectTwo = new Constant(3);
+        Expr addition = new Multiplication(tempObjectOne, tempObjectTwo);
 
-        assertThat(tempObject.evaluate()).isEqualTo(8);
+        //Act
+        double result = addition.evaluate();
+
+        //Assert
+        assertThat(result).isEqualTo(6);
     }
 
     @Test
     @DisplayName("Exponent Test")
     void expr_ExponentValue_Test() {
-        Exponent tempObject = new Exponent(new Constant(8), 2);
+        //Arrange
+        Expr tempObjectOne = new Constant(8);
+        Expr exponent = new Exponent(tempObjectOne, 2);
 
-        assertThat(tempObject.evaluate()).isEqualTo(64);
+        //Act
+        double result = exponent.evaluate();
+
+        //Assert
+        assertThat(result).isEqualTo(64);
     }
 }

@@ -18,9 +18,14 @@ public class Task2Test {
     @ParameterizedTest
     @MethodSource("rectangles")
     void rectangleArea(Rectangle rect) {
-        Rectangle result = rect.setWidth(20);
-        result = result.setHeight(10);
+        //Arrange
+        Rectangle tempObject = rect.setWidth(20);
+        tempObject = tempObject.setHeight(10);
 
-        assertThat(result.area()).isEqualTo(200);
+        //Act
+        int result = tempObject.area();
+
+        //Assert
+        assertThat(result).isEqualTo(200);
     }
 }

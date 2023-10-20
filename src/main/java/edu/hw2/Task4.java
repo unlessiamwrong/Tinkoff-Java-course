@@ -2,9 +2,6 @@ package edu.hw2;
 
 public class Task4 {
 
-    public Task4() {
-
-    }
 
     public record CallingInfo(String className, String methodName) {
         public static CallingInfo callingInfo() {
