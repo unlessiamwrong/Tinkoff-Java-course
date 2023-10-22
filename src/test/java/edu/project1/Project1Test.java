@@ -8,7 +8,6 @@ public class Project1Test {
 
     @Test
     @DisplayName("Wrong input, game is not ending Test")
-
     public void consoleHangman_WrongInput_GameIsNotOver_Test() {
         //Arrange
         Session.gameOver = false;
@@ -44,10 +43,10 @@ public class Project1Test {
     public void session_WrongGuessNotMaxAttempts_GameIsNotOver_Test() {
         //Arrange
         Session.gameOver = false;
-        String word = ConsoleHangman.word;
-        char userAnswer = 'q';
         ConsoleHangman.maxAttempts = 3;
         Session.attempts = 1;
+        String word = ConsoleHangman.word;
+        char userAnswer = 'q';
 
         //Act
         Session.guess(word, userAnswer);
@@ -62,12 +61,13 @@ public class Project1Test {
     public void session_WrongGuessMaxAttempts_GameIsOver_Test() {
         //Arrange
         Session.gameOver = false;
-        char userAnswer = 'z';
         ConsoleHangman.maxAttempts = 1;
         Session.attempts = 0;
+        String word = ConsoleHangman.word;
+        char userAnswer = 'z';
 
         //Act
-        Session.guess(ConsoleHangman.word, userAnswer);
+        Session.guess(word, userAnswer);
 
         //Assert
         assertThat(Session.gameOver).isTrue();
@@ -79,10 +79,10 @@ public class Project1Test {
     public void session_CorrectGuessWordIsMasked_GameIsNotOver_Test() {
         //Arrange
         Session.gameOver = false;
-        String word = ConsoleHangman.word;
-        char userAnswer = 'a';
         ConsoleHangman.maxAttempts = 3;
         Session.attempts = 1;
+        String word = ConsoleHangman.word;
+        char userAnswer = 'a';
 
         //Act
         Session.guess(word, userAnswer);
@@ -96,13 +96,12 @@ public class Project1Test {
     @DisplayName("Correct guess, word is finished, game is ending Test")
     public void session_CorrectGuessWordIsUnmasked_GameIsOver_Test() {
         //Arrange
-        Session.gameOver = false;
         String word = ConsoleHangman.word;
-        char letter = 'a';
         ConsoleHangman.maskedWord = word;
+        char userAnswer = 'a';
 
         //Act
-        Session.guess(word, letter);
+        Session.guess(word, userAnswer);
 
         //Assert
         assertThat(Session.gameOver).isTrue();
