@@ -8,10 +8,8 @@ public class Project1Test {
 
     @Test
     @DisplayName("Wrong input, game is not ending Test")
-
     public void consoleHangman_WrongInput_GameIsNotOver_Test() {
         //Arrange
-        Session.gameOver = false;
         String word = ConsoleHangman.word;
         String userAnswer = "1";
 
@@ -27,7 +25,6 @@ public class Project1Test {
     @DisplayName("Empty input, game is not ending Test")
     public void consoleHangman_EmptyInput_GameIsNotOver_Test() {
         //Arrange
-        Session.gameOver = false;
         String word = ConsoleHangman.word;
         String userAnswer = "";
 
@@ -61,7 +58,6 @@ public class Project1Test {
     @DisplayName("Wrong guess, attempts >= maxAttempts, game is not ending Test")
     public void session_WrongGuessMaxAttempts_GameIsOver_Test() {
         //Arrange
-        Session.gameOver = false;
         char userAnswer = 'z';
         ConsoleHangman.maxAttempts = 1;
         Session.attempts = 0;
@@ -96,7 +92,6 @@ public class Project1Test {
     @DisplayName("Correct guess, word is finished, game is ending Test")
     public void session_CorrectGuessWordIsUnmasked_GameIsOver_Test() {
         //Arrange
-        Session.gameOver = false;
         String word = ConsoleHangman.word;
         char letter = 'a';
         ConsoleHangman.maskedWord = word;
