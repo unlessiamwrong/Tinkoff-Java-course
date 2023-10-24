@@ -8,7 +8,7 @@ import java.util.List;
 public class Task5 {
     public static List<String> parseContacts(String[] names, String sortType) {
         List<String> list = Arrays.asList(names);
-        list.sort(new Comparator<String>() {
+        list.sort(new Comparator<>() {
             @Override
             public int compare(String o1, String o2) {
                 String[] nameSurnameOne = o1.split("\\s");
