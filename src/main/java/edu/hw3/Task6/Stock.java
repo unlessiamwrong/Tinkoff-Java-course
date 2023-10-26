@@ -13,7 +13,7 @@ public class Stock {
         return stockPrice;
     }
 
-    public String getCompanyName() {
+    public String getCompanyName(){
         return companyName;
     }
 }
