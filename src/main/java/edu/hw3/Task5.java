@@ -1,11 +1,16 @@
 package edu.hw3;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+@SuppressWarnings("MultipleStringLiterals")
 public class Task5 {
+
+    private Task5() {
+
+    }
+
     public static List<String> parseContacts(String[] names, String sortType) {
         List<String> list = Arrays.asList(names);
         list.sort(new Comparator<>() {
