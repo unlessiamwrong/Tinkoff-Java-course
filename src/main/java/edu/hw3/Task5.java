@@ -15,7 +15,7 @@ public class Task5 {
         list.sort((o1, o2) -> {
             String[] nameSurnameOne = o1.split("\\s");
             String[] nameSurnameTwo = o2.split("\\s");
-            if (sortType.equals("ASC")) {
+            if ("ASC".equals(sortType)) {
                 return nameSurnameOne[1].compareTo(nameSurnameTwo[1]);
             }
             return -(nameSurnameOne[1].compareTo(nameSurnameTwo[1]));
