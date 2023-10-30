@@ -1,61 +1,171 @@
 package edu.hw4;
-import java.util.ArrayList;
+
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@SuppressWarnings("MagicNumber")
 public class Tasks {
-    public void setStream() {
-        List<Animal> animals = new ArrayList<>();
-        animals.add(new Animal("Vasya", Animal.Type.CAT, Animal.Sex.M, 10, 10, 10, true));
-        animals.add(new Animal("Vitya", Animal.Type.CAT, Animal.Sex.M, 5, 20, 20, false));
-        animals.add(new Animal("Masha", Animal.Type.CAT, Animal.Sex.F, 30, 30, 30, true));
-        animals.add(new Animal("Katya", Animal.Type.CAT, Animal.Sex.F, 40, 40, 40, false));
-        animals.add(new Animal("Sasha", Animal.Type.CAT, Animal.Sex.M, 50, 50, 50, true));
-        Stream<Animal> animalsStream = animals.stream();
+
+    private Tasks() {
 
     }
 
-    static List<Animal> task1(Stream<Animal> animalsStream) {
-        return animalsStream.sorted(Comparator.comparingInt(Animal::height)).toList();
-    }
-
-    static List<Animal> task2(Stream<Animal> animalsStream) {
-        return animalsStream.sorted(Comparator.comparingInt(Animal::weight).reversed()).toList();
-    }
-
-    static Map<Animal.Type, Integer> task3(Stream<Animal> animalsStream) {
-        return animalsStream.collect(Collectors.toMap(Animal::type, i -> 1, Integer::sum));
-    }
-
-    static Animal task4(Stream<Animal> animalsStream) {
-        return animalsStream
-            .max(Comparator.comparingInt(animal -> animal.name().length()))
-            .get();
-
-    }
-
-    static Animal.Sex task5(Stream<Animal> animalsStream) {
-        return animalsStream.collect(Collectors.toMap(Animal::sex, i -> 1, Integer::sum))
-            .entrySet()
+    public static List<Animal> task1(List<Animal> animals) {
+        return animals
             .stream()
-            .max(Comparator.comparing(Map.Entry::getValue))
-            .get()
+            .sorted(Comparator.comparingInt(Animal::height))
+            .toList();
+    }
+
+    public static List<Animal> task2(List<Animal> animals) {
+        return animals
+            .stream()
+            .sorted(Comparator.comparingInt(Animal::weight)
+                .reversed())
+            .toList();
+    }
+
+    public static Map<Animal.Type, Integer> task3(List<Animal> animals) {
+        return animals
+            .stream()
+            .collect(Collectors.toMap(Animal::type, i -> 1, Integer::sum));
+    }
+
+    public static Animal task4(List<Animal> animals) {
+        return animals
+            .stream()
+            .max(Comparator.comparingInt(animal -> animal.name().length()))
+            .orElse(null);
+
+    }
+
+    public static Animal.Sex task5(List<Animal> animals) {
+        return Objects.requireNonNull(animals
+                .stream()
+                .collect(Collectors.toMap(Animal::sex, i -> 1, Integer::sum))
+                .entrySet()
+                .stream()
+                .max(Map.Entry.comparingByValue())
+                .orElse(null))
             .getKey();
 
-
     }
-    static Map<Animal.Type, Animal> task6(Stream<Animal> animalsStream) {
-        return animalsStream.collect(Collectors.groupingBy(Animal::type))
+
+    public static Map<Animal.Type, Animal> task6(List<Animal> animals) {
+        return animals
+            .stream()
+            .collect(Collectors.groupingBy(Animal::type))
             .entrySet()
             .stream()
-            .collect(Collectors.toMap(Map.Entry::getKey, weight -> weight.getValue().stream().max(Comparator.comparingInt(Animal::weight)).get()));
-
+            .collect(Collectors.toMap(Map.Entry::getKey, weight -> weight
+                .getValue()
+                .stream()
+                .max(Comparator.comparingInt(Animal::weight))
+                .get()));
 
     }
 
-}1
+    public static Animal task7(List<Animal> animals, int k) {
+        return animals
+            .stream()
+            .sorted(Comparator.comparingInt(Animal::age).reversed())
+            .skip(k - 1)
+            .findFirst()
+            .orElse(null);
+
+    }
+
+    public static Optional<Animal> task8(List<Animal> animals, int k) {
+        return animals
+            .stream()
+            .filter(animal -> animal.height() < k)
+            .max(Comparator.comparingInt(Animal::weight));
+
+    }
+
+    public static Integer task9(List<Animal> animals) {
+        return animals
+            .stream()
+            .mapToInt(Animal::paws).sum();
+
+    }
+
+    public static List<Animal> task10(List<Animal> animals) {
+        return animals
+            .stream()
+            .filter(animal -> animal.age() != animal.paws())
+            .toList();
+
+    }
+
+    public static List<Animal> task11(List<Animal> animals) {
+        return animals
+            .stream()
+            .filter(Animal::bites)
+            .filter(animal -> animal.height() > 100)
+            .toList();
+
+    }
+
+    public static Integer task12(List<Animal> animals) {
+        return Math.toIntExact(animals.stream()
+            .filter(animal -> animal.weight() > animal.height())
+            .count());
+
+    }
+
+    public static List<Animal> task13(List<Animal> animals) {
+        return animals.stream()
+            .filter(animal -> Arrays.stream(animal.name().split("\\s+")).count() > 1)
+            .toList();
+
+    }
+
+    public static Boolean task14(List<Animal> animals, int k) {
+        return Math.toIntExact(animals.stream()
+            .filter(animal -> animal.type() == Animal.Type.DOG)
+            .filter(animal -> animal.height() > k).count()) > 0;
+
+    }
+
+    public static Integer task15(List<Animal> animals, int k, int i) {
+        return animals.stream()
+            .filter(animal -> animal.age() >= k)
+            .filter(animal -> animal.age() <= i)
+            .mapToInt(Animal::weight)
+            .sum();
+
+    }
+
+    public static List<Animal> task16(List<Animal> animals) {
+        return animals
+            .stream()
+            .sorted(Comparator.comparing(Animal::type))
+            .sorted(Comparator.comparing(Animal::sex))
+            .sorted(Comparator.comparing(Animal::name)).toList();
+
+    }
+
+    public static Boolean task17(List<Animal> animals) {
+        long spiders = animals.stream().filter(animal -> animal.type() == Animal.Type.SPIDER && animal.bites()).count();
+        long dogs = animals.stream().filter(animal -> animal.type() == Animal.Type.DOG && animal.bites()).count();
+        return spiders > dogs;
+
+    }
+
+    public static Animal task18(List<Animal> animalsOne, List<Animal> animalsTwo) {
+        return Stream.of(animalsOne, animalsTwo)
+            .flatMap(List::stream)
+            .filter(animal -> animal.type() == Animal.Type.FISH)
+            .max(Comparator.comparingInt(Animal::weight))
+            .orElse(null);
+
+    }
+
+}
