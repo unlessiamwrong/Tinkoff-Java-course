@@ -1,6 +1,7 @@
 package edu.hw3;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Task1 {
 
@@ -13,7 +14,7 @@ public class Task1 {
             return null;
         }
         StringBuilder result = new StringBuilder();
-        HashMap<Character, Character> dictionary = createDict();
+        Map<Character, Character> dictionary = createDictWithLettersOppositeLetters();
         for (int j = 0; j < str.length(); ++j) {
             char currentChar = str.charAt(j);
             if (!Character.isLetter(currentChar)) {
@@ -29,12 +30,12 @@ public class Task1 {
         return result.toString();
     }
 
-    static HashMap<Character, Character> createDict() {
+    static Map<Character, Character> createDictWithLettersOppositeLetters() {
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
         String reversedAlphabet = new StringBuilder(alphabet).reverse().toString();
         char[] alphabetCharsArray = alphabet.toCharArray();
         char[] reversedAlphabetCharsArray = reversedAlphabet.toCharArray();
-        HashMap<Character, Character> dictionary = new HashMap<>();
+        Map<Character, Character> dictionary = new HashMap<>();
 
         for (int i = 0; i < alphabet.length(); ++i) {
             Character letter = alphabetCharsArray[i];
