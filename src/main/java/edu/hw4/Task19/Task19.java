@@ -11,7 +11,7 @@ public class Task19 {
 
     }
 
-    public static Map<Integer, HashSet<ValidationError>> task19(List<Animal> animals) {
+    public static Map<Integer, HashSet<ValidationError>> collectObjectsWithValidationErrors(List<Animal> animals) {
         return animals.stream()
             .collect(Collectors.toMap(Animal::hashCode, ValidationError::validateField));
 
