@@ -1,9 +1,7 @@
-package edu.hw3;
+package edu.hw4;
 
-import edu.hw4.Animal;
 import edu.hw4.Task19.Task19;
 import edu.hw4.Task20.Task20;
-import edu.hw4.Tasks;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -15,9 +13,6 @@ public class TasksTests {
         List<Animal> animals = new ArrayList<>();
         animals.add(new Animal("Vasya", Animal.Type.SPIDER, Animal.Sex.M, 4, 101, 40, true));
         animals.add(new Animal("Vitalya", Animal.Type.SPIDER, Animal.Sex.F, 5, 21, 20, true));
-        animals.add(new Animal("Misha", Animal.Type.DOG, Animal.Sex.F, 6, 3, 4, true));
-        animals.add(new Animal("Katya", Animal.Type.FISH, Animal.Sex.F, 40, 40, 41, true));
-        animals.add(new Animal("Oleg", Animal.Type.FISH, Animal.Sex.F, 1, 1, 1, true));
         animals.add(new Animal("M J", Animal.Type.FISH, Animal.Sex.F, 1, 1, 1, true));
         return animals;
     }
@@ -25,61 +20,57 @@ public class TasksTests {
     public static List<Animal> createCollectionForTaskFrom18To20() {
         List<Animal> animals = new ArrayList<>();
         animals.add(new Animal("V", Animal.Type.SPIDER, Animal.Sex.M, 4, 101, 40, true));
-        animals.add(new Animal("V1", Animal.Type.SPIDER, Animal.Sex.F, 5, 21, 20, true));
-        animals.add(new Animal("M", Animal.Type.DOG, Animal.Sex.F, 6, 3, 4, true));
-        animals.add(new Animal("K", Animal.Type.FISH, Animal.Sex.F, 40, 40, 333, true));
-        animals.add(new Animal("O", Animal.Type.FISH, Animal.Sex.F, 1, 1, 1, true));
         animals.add(new Animal("M2", Animal.Type.FISH, Animal.Sex.F, -1, 1, 1, true));
         animals.add(new Animal("M3", Animal.Type.FISH, Animal.Sex.F, -1, -1, -1, true));
         return animals;
     }
 
     @Test
-    void Task1Test() {
+    void collectSortByHeight_IsFirstMJ_Test() {
         //Arrange
         var animals = createCollection();
 
         //Act
-        var result = Tasks.task1(animals);
+        var result = Tasks.collectSortByHeight(animals);
 
         //Assert
-        assertThat(result.getFirst().name()).isEqualTo("Oleg");
+        assertThat(result.getFirst().name()).isEqualTo("M J");
 
     }
 
     @Test
-    void Task2Test() {
+    void collectReversedSortByWeight_IsFirstVasya_Test() {
         //Arrange
         var animals = createCollection();
 
         //Act
-        var result = Tasks.task2(animals);
+        var result = Tasks.collectReversedSortByWeight(animals);
 
         //Assert
-        assertThat(result.getFirst().name()).isEqualTo("Katya");
+        assertThat(result.getFirst().name()).isEqualTo("Vasya");
 
     }
 
     @Test
-    void Task3Test() {
+    void collectCountByType_FishEqualsOne_Test() {
         //Arrange
         var animals = createCollection();
 
         //Act
-        var result = Tasks.task3(animals);
+        var result = Tasks.collectCountByType(animals);
 
         //Assert
-        assertThat(result.get(Animal.Type.FISH)).isEqualTo(3);
+        assertThat(result.get(Animal.Type.FISH)).isEqualTo(1);
 
     }
 
     @Test
-    void Task4Test() {
+    void longestName_EqualsVitalya_Test() {
         //Arrange
         var animals = createCollection();
 
         //Act
-        var result = Tasks.task4(animals);
+        var result = Tasks.longestName(animals);
 
         //Assert
         assertThat(result.name()).isEqualTo("Vitalya");
@@ -87,12 +78,12 @@ public class TasksTests {
     }
 
     @Test
-    void Task5Test() {
+    void biggestSex_EqualsF_Test() {
         //Arrange
         var animals = createCollection();
 
         //Act
-        var result = Tasks.task5(animals);
+        var result = Tasks.biggestSex(animals);
 
         //Assert
         assertThat(result).isEqualTo(Animal.Sex.F);
@@ -100,66 +91,66 @@ public class TasksTests {
     }
 
     @Test
-    void Task6Test() {
+    void collectEveryTypeWithMostWeight_IsFishEqualsMJ_Test() {
         //Arrange
         var animals = createCollection();
 
         //Act
-        var result = Tasks.task6(animals);
+        var result = Tasks.collectEveryTypeWithMostWeight(animals);
 
         //Assert
-        assertThat(result.get(Animal.Type.FISH).name()).isEqualTo("Katya");
+        assertThat(result.get(Animal.Type.FISH).name()).isEqualTo("M J");
 
     }
 
     @Test
-    void Task7Test() {
+    void ThirdOldest_EqualsMJ_Test() {
         //Arrange
         var animals = createCollection();
         int k = 3;
 
         //Act
-        var result = Tasks.task7(animals, k);
+        var result = Tasks.kOldest(animals, k);
 
         //Assert
-        assertThat(result.name()).isEqualTo("Vitalya");
+        assertThat(result.name()).isEqualTo("M J");
 
     }
 
     @Test
-    void Task8Test() {
+    void mostWeightBelowHeightTen_EqualsMJ_Test() {
         //Arrange
         var animals = createCollection();
         int k = 10;
 
         //Act
-        var result = Tasks.task8(animals, k);
+        var result = Tasks.mostWeightBelowKHeight(animals, k);
 
         //Assert
-        assertThat(result.get().name()).isEqualTo("Misha");
+        assertThat(result.get().name()).isEqualTo("M J");
 
     }
 
     @Test
-    void Task9Test() {
+    void countPaws_EqualsSixteen_Test() {
         //Arrange
         var animals = createCollection();
 
         //Act
-        var result = Tasks.task9(animals);
+        var result = Tasks.countPaws(animals);
 
         //Assert
-        assertThat(result).isEqualTo(20);
+        assertThat(result).isEqualTo(16);
 
     }
 
     @Test
-    void Task10Test() {
+    void collectWhereAgeNotEqualPaws_IsFirstVasya_IsLastMJ_Test() {
         //Arrange
         var animals = createCollection();
 
         //Act
-        var result = Tasks.task10(animals);
+        var result = Tasks.collectWhereAgeNotEqualPaws(animals);
 
         //Assert
         assertThat(result.getFirst().name()).isEqualTo("Vasya");
@@ -168,12 +159,12 @@ public class TasksTests {
     }
 
     @Test
-    void Task11Test() {
+    void collectBitesTrueAboveKHeight_IsFirstVasya_Test() {
         //Arrange
         var animals = createCollection();
 
         //Act
-        var result = Tasks.task11(animals);
+        var result = Tasks.collectBitesTrueAboveKHeight(animals);
 
         //Assert
         assertThat(result.getFirst().name()).isEqualTo("Vasya");
@@ -181,25 +172,25 @@ public class TasksTests {
     }
 
     @Test
-    void Task12Test() {
+    void countWeightAboveHeight_EqualsZero_Test() {
         //Arrange
         var animals = createCollection();
 
         //Act
-        var result = Tasks.task12(animals);
+        var result = Tasks.countWeightAboveHeight(animals);
 
         //Assert
-        assertThat(result).isEqualTo(2);
+        assertThat(result).isEqualTo(0);
 
     }
 
     @Test
-    void Task13Test() {
+    void collectNameConsistMoreThanTwoWords_IsFirstMJ_Test() {
         //Arrange
         var animals = createCollection();
 
         //Act
-        var result = Tasks.task13(animals);
+        var result = Tasks.collectNameConsistMoreThanTwoWords(animals);
 
         //Assert
         assertThat(result.getFirst().name()).isEqualTo("M J");
@@ -207,13 +198,13 @@ public class TasksTests {
     }
 
     @Test
-    void Task14Test() {
+    void ifTypeDogAboveKHeight_EqualsFalse_Test() {
         //Arrange
         var animals = createCollection();
         int k = 10;
 
         //Act
-        var result = Tasks.task14(animals, k);
+        var result = Tasks.ifTypeDogAboveKHeight(animals, k);
 
         //Assert
         assertThat(result).isFalse();
@@ -221,76 +212,76 @@ public class TasksTests {
     }
 
     @Test
-    void Task15Test() {
+    void countWeightFromKtoIAge_EqualsSixtyOne_Test() {
         //Arrange
         var animals = createCollection();
         int k = 1;
         int i = 10;
 
         //Act
-        var result = Tasks.task15(animals, k, i);
+        var result = Tasks.countWeightFromKtoIAge(animals, k, i);
 
         //Assert
-        assertThat(result).isEqualTo(66);
+        assertThat(result).isEqualTo(61);
 
     }
 
     @Test
-    void Task16Test() {
+    void collectSortByTypeBySexByName_IsFirstMJ_Test() {
         //Arrange
         var animals = createCollection();
 
         //Act
-        var result = Tasks.task16(animals);
+        var result = Tasks.collectSortByTypeBySexByName(animals);
 
         //Assert
-        assertThat(result.getFirst().name()).isEqualTo("Katya");
+        assertThat(result.getFirst().name()).isEqualTo("M J");
     }
 
     @Test
-    void Task17Test() {
+    void ifSpidersBiteMoreThanDogs_EqualsTrue_Test() {
         //Arrange
         var animals = createCollection();
 
         //Act
-        var result = Tasks.task17(animals);
+        var result = Tasks.ifSpidersBiteMoreThanDogs(animals);
 
         //Assert
         assertThat(result).isTrue();
     }
 
     @Test
-    void Task18Test() {
+    void mostWeightFromTwoCollections_EqualsMJ_Test() {
         //Arrange
         var animalsOne = createCollection();
         var animalsTwo = createCollectionForTaskFrom18To20();
 
         //Act
-        var result = Tasks.task18(animalsOne, animalsTwo);
+        var result = Tasks.mostWeightFromTwoCollections(animalsOne, animalsTwo);
 
         //Assert
-        assertThat(result.name()).isEqualTo("K");
+        assertThat(result.name()).isEqualTo("M J");
     }
 
     @Test
-    void Task19Test() {
+    void collectObjectsWithValidationErrors() {
         //Arrange
         var animals = createCollectionForTaskFrom18To20();
 
         //Act
-        var result = Task19.task19(animals);
+        var result = Task19.collectObjectsWithValidationErrors(animals);
 
         //Assert
         assertThat(result).isNotNull();
     }
 
     @Test
-    void Task20Test() {
+    void prettyCollectObjectsWithValidationErrors_Test() {
         //Arrange
         var animals = createCollectionForTaskFrom18To20();
 
         //Act
-        var result = Task20.task20(animals);
+        var result = Task20.prettyCollectObjectsWithValidationErrors(animals);
 
         //Assert
         assertThat(result.get("M3")).isNotNull();

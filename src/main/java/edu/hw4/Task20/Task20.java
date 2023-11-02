@@ -12,7 +12,7 @@ public class Task20 {
 
     }
 
-    public static Map<String, HashSet<String>> task20(List<Animal> animals) {
+    public static Map<String, HashSet<String>> prettyCollectObjectsWithValidationErrors(List<Animal> animals) {
         return animals.stream()
             .collect(Collectors.toMap(Animal::name, ValidationError::validateField));
     }
