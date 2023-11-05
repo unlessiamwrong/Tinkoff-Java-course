@@ -16,7 +16,8 @@ public class Main {
         Utility.printMaze(temp);
         System.out.println(" ");
         var result = BFSMazeSolver.solve(temp, 13, 13);
-        if(result){
+
+        if (result) {
             Utility.printMaze(temp);
         }
     }
