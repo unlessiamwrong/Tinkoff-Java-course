@@ -3,7 +3,8 @@ package edu.project2;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings({"MultipleStringLiterals", "MagicNumber", "RegexpSinglelineJava", "MissingSwitchDefault"})
+@SuppressWarnings({"MultipleStringLiterals", "MagicNumber", "RegexpSinglelineJava", "MissingSwitchDefault",
+    "CyclomaticComplexity"})
 public class Utility {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLUE = "\u001B[34m";
@@ -12,156 +13,168 @@ public class Utility {
 
     }
 
-    public static void removeWall(String unparsedCurrentCell, String unparsedNeighborCell, String[][] maze) {
-        var currentCell = unparsedCurrentCell.split(" ");
-        var neighborCell = unparsedNeighborCell.split(" ");
-        int subtractionX = Integer.parseInt(currentCell[0]) - Integer.parseInt(neighborCell[0]);
-        int subtractionY = Integer.parseInt(currentCell[1]) - Integer.parseInt(neighborCell[1]);
+    public static void removeWall(Cell current, Cell neighbor, String[][] maze) {
+
+        int subtractionX = current.x - neighbor.x;
+        int subtractionY = current.y - neighbor.y;
 
         if (subtractionX == 0) {
             if (subtractionY < 0) {
-                maze[Integer.parseInt(currentCell[0])][Integer.parseInt(currentCell[1]) + 1] = "DESTROYED_WALL";
+                maze[current.x][current.y + 1] = "DESTROYED_WALL";
             } else {
-                maze[Integer.parseInt(currentCell[0])][Integer.parseInt(currentCell[1]) - 1] = "DESTROYED_WALL";
+                maze[current.x][current.y - 1] = "DESTROYED_WALL";
             }
 
         }
         if (subtractionY == 0) {
             if (subtractionX < 0) {
-                maze[Integer.parseInt(currentCell[0]) + 1][Integer.parseInt(currentCell[1])] = "DESTROYED_WALL";
+                maze[current.x + 1][current.y] = "DESTROYED_WALL";
             } else {
-                maze[Integer.parseInt(currentCell[0]) - 1][Integer.parseInt(currentCell[1])] = "DESTROYED_WALL";
+                maze[current.x - 1][current.y] = "DESTROYED_WALL";
             }
         }
     }
 
-    public static void computeWay(String unparsedCurrentCell, String unparsedNeighborCell, String[][] maze) {
-        var currentCell = unparsedCurrentCell.split(" ");
-        var neighborCell = unparsedNeighborCell.split(" ");
-        int subtractionX = Integer.parseInt(currentCell[0]) - Integer.parseInt(neighborCell[0]);
-        int subtractionY = Integer.parseInt(currentCell[1]) - Integer.parseInt(neighborCell[1]);
-        maze[Integer.parseInt(neighborCell[0])][Integer.parseInt(neighborCell[1])] = "PASSAGE";
+    public static void computeWay(Cell current, Cell neighbor, String[][] maze) {
+        int subtractionX = current.x - neighbor.x;
+        int subtractionY = current.y - neighbor.y;
+        maze[neighbor.x][neighbor.y] = "PASSAGE";
 
         if (subtractionX == 0) {
             if (subtractionY < 0) {
-                maze[Integer.parseInt(currentCell[0])][Integer.parseInt(currentCell[1]) + 1] = "PASSAGE";
+                maze[current.x][current.y + 1] = "PASSAGE";
             } else {
-                maze[Integer.parseInt(currentCell[0])][Integer.parseInt(currentCell[1]) - 1] = "PASSAGE";
+                maze[current.x][current.y - 1] = "PASSAGE";
             }
 
         }
         if (subtractionY == 0) {
             if (subtractionX < 0) {
-                maze[Integer.parseInt(currentCell[0]) + 1][Integer.parseInt(currentCell[1])] = "PASSAGE";
+                maze[current.x + 1][current.y] = "PASSAGE";
             } else {
-                maze[Integer.parseInt(currentCell[0]) - 1][Integer.parseInt(currentCell[1])] = "PASSAGE";
+                maze[current.x - 1][current.y] = "PASSAGE";
             }
         }
     }
 
-    public static ArrayList<String> getNeighborsForDFSGenerator(int x, int y, List<String> unvisited) {
-        ArrayList<String> randomPickList = new ArrayList<>();
-        String positiveNeighborX = (x + 2) + " " + y;
-        String positiveNeighborY = x + " " + (y + 2);
-        String negativeNeighborX = (x - 2) + " " + y;
-        String negativeNeighborY = x + " " + (y - 2);
+    public static ArrayList<Cell> getNeighborsDFSGenerator(int x, int y, List<Cell> unvisited) {
+        ArrayList<Cell> randomPickList = new ArrayList<>();
 
-        if (unvisited.contains(positiveNeighborX)) {
-            randomPickList.add(unvisited.get(unvisited.indexOf(positiveNeighborX)));
+        if (unvisited.stream().anyMatch(cell -> cell.x == x + 2 && cell.y == y)) {
+            randomPickList.add(unvisited.stream().filter(cell -> cell.x == x + 2 && cell.y == y).findAny().get());
         }
 
-        if (unvisited.contains(positiveNeighborY)) {
-            randomPickList.add(unvisited.get(unvisited.indexOf(positiveNeighborY)));
+        if (unvisited.stream().anyMatch(cell -> cell.x == x && cell.y == y + 2)) {
+            randomPickList.add(unvisited.stream().filter(cell -> cell.x == x && cell.y == y + 2).findAny().get());
         }
 
-        if (unvisited.contains(negativeNeighborX)) {
-            randomPickList.add(unvisited.get(unvisited.indexOf(negativeNeighborX)));
+        if (unvisited.stream().anyMatch(cell -> cell.x == x - 2 && cell.y == y)) {
+            randomPickList.add(unvisited.stream().filter(cell -> cell.x == x - 2 && cell.y == y).findAny().get());
         }
 
-        if (unvisited.contains(negativeNeighborY)) {
-            randomPickList.add(unvisited.get(unvisited.indexOf(negativeNeighborY)));
+        if (unvisited.stream().anyMatch(cell -> cell.x == x && cell.y == y - 2)) {
+            randomPickList.add(unvisited.stream().filter(cell -> cell.x == x && cell.y == y - 2).findAny().get());
         }
-
         return randomPickList;
     }
 
-    public static ArrayList<String> getNeighborsForSolver(int x, int y, List<String> unvisited) {
-        ArrayList<String> randomPickList = new ArrayList<>();
-        String positiveNeighborX = (x + 1) + " " + y;
-        String positiveNeighborY = x + " " + (y + 1);
-        String negativeNeighborX = (x - 1) + " " + y;
-        String negativeNeighborY = x + " " + (y - 1);
+    public static ArrayList<Cell> getNeighborsDFSSolver(int x, int y, List<Cell> unvisited) {
+        ArrayList<Cell> randomPickList = new ArrayList<>();
 
-        if (unvisited.contains(positiveNeighborX)) {
-            randomPickList.add(unvisited.get(unvisited.indexOf(positiveNeighborX)));
+        if (unvisited.stream().anyMatch(cell -> cell.x == x + 1 && cell.y == y)) {
+            randomPickList.add(unvisited.stream().filter(cell -> cell.x == x + 1 && cell.y == y).findAny().get());
         }
 
-        if (unvisited.contains(positiveNeighborY)) {
-            randomPickList.add(unvisited.get(unvisited.indexOf(positiveNeighborY)));
+        if (unvisited.stream().anyMatch(cell -> cell.x == x && cell.y == y + 1)) {
+            randomPickList.add(unvisited.stream().filter(cell -> cell.x == x && cell.y == y + 1).findAny().get());
         }
 
-        if (unvisited.contains(negativeNeighborX)) {
-            randomPickList.add(unvisited.get(unvisited.indexOf(negativeNeighborX)));
+        if (unvisited.stream().anyMatch(cell -> cell.x == x - 1 && cell.y == y)) {
+            randomPickList.add(unvisited.stream().filter(cell -> cell.x == x - 1 && cell.y == y).findAny().get());
         }
 
-        if (unvisited.contains(negativeNeighborY)) {
-            randomPickList.add(unvisited.get(unvisited.indexOf(negativeNeighborY)));
+        if (unvisited.stream().anyMatch(cell -> cell.x == x && cell.y == y - 1)) {
+            randomPickList.add(unvisited.stream().filter(cell -> cell.x == x && cell.y == y - 1).findAny().get());
         }
-
         return randomPickList;
     }
 
-    public static List<String> getWallsForPrimGenerator(String cell, String[][] maze) {
-        List<String> result = new ArrayList<>();
-        String[] parsedCell = cell.split(" ");
-        int x = Integer.parseInt(parsedCell[0]);
-        int y = Integer.parseInt(parsedCell[1]);
-        if (x + 2 < maze.length) {
-            if (maze[x + 2][y] != null && maze[x + 2][y].equals("WALL")) {
-                result.add((x + 2) + " " + y);
+    public static ArrayList<Cell> getNeighborsBFSSolver(int x, int y, Cell[][] path, String[][] maze) {
+        ArrayList<Cell> randomPickList = new ArrayList<>();
+
+        if (x + 2 < path.length
+            && path[x + 1][y] == null
+            && (maze[x + 1][y].equals("PASSAGE") || maze[x + 1][y].equals("DESTROYED_WALL"))) {
+            randomPickList.add(new Cell(x + 1, y));
+        }
+
+        if (y + 2 < path.length
+            && path[x][y + 1] == null
+            && (maze[x][y + 1].equals("PASSAGE") || maze[x][y + 1].equals("DESTROYED_WALL"))) {
+            randomPickList.add(new Cell(x, y + 1));
+        }
+
+        if (x >= 2
+            && path[x - 1][y] == null
+            && (maze[x - 1][y].equals("PASSAGE") || maze[x - 1][y].equals("DESTROYED_WALL"))) {
+            randomPickList.add(new Cell(x - 1, y));
+        }
+
+        if (y >= 2
+            && path[x][y - 1] == null
+            && (maze[x][y - 1].equals("PASSAGE") || maze[x][y - 1].equals("DESTROYED_WALL"))) {
+            randomPickList.add(new Cell(x, y - 1));
+        }
+        return randomPickList;
+    }
+
+    public static List<Cell> getWallsPrimGenerator(Cell cell, String[][] maze) {
+        List<Cell> result = new ArrayList<>();
+
+        if (cell.x + 2 < maze.length) {
+            if (maze[cell.x + 2][cell.y] != null && maze[cell.x + 2][cell.y].equals("WALL")) {
+                result.add(new Cell(cell.x + 2, cell.y));
             }
         }
-        if (y + 2 < maze.length) {
-            if (maze[x][y + 2] != null && maze[x][y + 2].equals("WALL")) {
-                result.add(x + " " + (y + 2));
+        if (cell.y + 2 < maze.length) {
+            if (maze[cell.x][cell.y + 2] != null && maze[cell.x][cell.y + 2].equals("WALL")) {
+                result.add(new Cell(cell.x, cell.y + 2));
             }
         }
-        if (x >= 2) {
-            if (maze[x - 2][y] != null && maze[x - 2][y].equals("WALL")) {
-                result.add((x - 2) + " " + y);
+        if (cell.x >= 2) {
+            if (maze[cell.x - 2][cell.y] != null && maze[cell.x - 2][cell.y].equals("WALL")) {
+                result.add(new Cell(cell.x - 2, cell.y));
             }
         }
-        if (y >= 2) {
-            if (maze[x][y - 2] != null && maze[x][y - 2].equals("WALL")) {
-                result.add(x + " " + (y - 2));
+        if (cell.y >= 2) {
+            if (maze[cell.x][cell.y - 2] != null && maze[cell.x][cell.y - 2].equals("WALL")) {
+                result.add(new Cell(cell.x, cell.y - 2));
             }
         }
         return result;
     }
 
-    public static List<String> getPassagesForPrimGenerator(String cell, String[][] maze) {
-        List<String> result = new ArrayList<>();
-        String[] parsedCell = cell.split(" ");
-        int x = Integer.parseInt(parsedCell[0]);
-        int y = Integer.parseInt(parsedCell[1]);
-        if (x + 2 < maze.length) {
-            if (maze[x + 2][y] != null && maze[x + 2][y].equals("PASSAGE")) {
-                result.add((x + 2) + " " + y);
+    public static List<Cell> getPassagesPrimGenerator(Cell cell, String[][] maze) {
+        List<Cell> result = new ArrayList<>();
+
+        if (cell.x + 2 < maze.length) {
+            if (maze[cell.x + 2][cell.y] != null && maze[cell.x + 2][cell.y].equals("PASSAGE")) {
+                result.add(new Cell(cell.x + 2, cell.y));
             }
         }
-        if (y + 2 < maze.length) {
-            if (maze[x][y + 2] != null && maze[x][y + 2].equals("PASSAGE")) {
-                result.add(x + " " + (y + 2));
+        if (cell.y + 2 < maze.length) {
+            if (maze[cell.x][cell.y + 2] != null && maze[cell.x][cell.y + 2].equals("PASSAGE")) {
+                result.add(new Cell(cell.x, cell.y + 2));
             }
         }
-        if (x >= 2) {
-            if (maze[x - 2][y] != null && maze[x - 2][y].equals("PASSAGE")) {
-                result.add((x - 2) + " " + y);
+        if (cell.x >= 2) {
+            if (maze[cell.x - 2][cell.y] != null && maze[cell.x - 2][cell.y].equals("PASSAGE")) {
+                result.add(new Cell(cell.x - 2, cell.y));
             }
         }
-        if (y >= 2) {
-            if (maze[x][y - 2] != null && maze[x][y - 2].equals("PASSAGE")) {
-                result.add(x + " " + (y - 2));
+        if (cell.y >= 2) {
+            if (maze[cell.x][cell.y - 2] != null && maze[cell.x][cell.y - 2].equals("PASSAGE")) {
+                result.add(new Cell(cell.x, cell.y - 2));
             }
         }
         return result;
@@ -182,4 +195,43 @@ public class Utility {
             System.out.println(result);
         }
     }
+
+    //create field with passages surrounded by walls
+    public static String[][] setFieldDFSGenerator(int width, int height, List<Cell> unvisited) {
+        String[][] maze = new String[width][height];
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (i % 2 != 0 && j % 2 != 0) {
+                    maze[i][j] = "PASSAGE";
+                    unvisited.add(new Cell(i, j));
+                } else {
+                    maze[i][j] = "WALL";
+                }
+            }
+        }
+        return maze;
+    }
+
+    //create field full of walls
+    public static String[][] sefFieldPrimGenerator(int width, int height) {
+        String[][] maze = new String[width][height];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                maze[i][j] = "WALL";
+            }
+        }
+        return maze;
+    }
+
+    public static void markPassagesDFSSolver(String[][] maze, int sideLength, List<Cell> unvisited) {
+        for (int i = 0; i < sideLength; i++) {
+            for (int j = 0; j < sideLength; j++) {
+                if (maze[i][j].equals("PASSAGE") || maze[i][j].equals("DESTROYED_WALL")) {
+                    unvisited.add(new Cell(i, j));
+                }
+            }
+        }
+    }
+
 }

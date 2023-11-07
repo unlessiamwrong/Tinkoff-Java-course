@@ -1,9 +1,9 @@
 package edu.project2;
 
-import edu.project2.Generators.DFSMazeGenerator;
 import edu.project2.Solvers.BFSMazeSolver;
+import java.util.Arrays;
 
-@SuppressWarnings({"RegexpSinglelineJava", "MagicNumber"})
+@SuppressWarnings({"RegexpSinglelineJava", "MagicNumber", "MultipleStringLiterals"})
 public class Main {
 
     private Main() {
@@ -12,14 +12,19 @@ public class Main {
 
     public static void main(String[] args) {
         // example how to create and solve maze
-        var temp = DFSMazeGenerator.generate(15, 15);
-        Utility.printMaze(temp);
-        System.out.println(" ");
-        var result = BFSMazeSolver.solve(temp, 13, 13);
-
+        String[][] maze = {{"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
+            {"WALL", "PASSAGE", "WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "WALL"},
+            {"WALL", "DESTROYED_WALL", "WALL", "WALL", "WALL", "DESTROYED_WALL", "WALL"},
+            {"WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "WALL"},
+            {"WALL", "WALL", "WALL", "WALL", "WALL", "DESTROYED_WALL", "WALL"},
+            {"WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "WALL"},
+            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}};
+        var result = BFSMazeSolver.solve(maze, 1, 5);
         if (result) {
-            Utility.printMaze(temp);
+            System.out.println(Arrays.deepToString(maze));
+            Utility.printMaze(maze);
         }
+
     }
 }
 

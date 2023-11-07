@@ -1,10 +1,12 @@
 package edu.project2.Solvers;
 
+import edu.project2.Cell;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Stack;
-import static edu.project2.Utility.getNeighborsForSolver;
+import static edu.project2.Utility.getNeighborsDFSSolver;
+import static edu.project2.Utility.markPassagesDFSSolver;
 
 @SuppressWarnings("MultipleStringLiterals")
 public class DFSMazeSolver {
@@ -19,37 +21,22 @@ public class DFSMazeSolver {
             throw new NumberFormatException("Incorrect cell. Must be Passage and be inside the field.");
         }
 
-        String exitCell = x + " " + y;
-        List<String> unvisited = new ArrayList<>();
-        Stack<String> cellStack = new Stack<>();
-        for (int i = 0; i < sideLength; i++) {
-            for (int j = 0; j < sideLength; j++) {
-                if (maze[i][j].equals("PASSAGE") || maze[i][j].equals("DESTROYED_WALL")) {
-                    unvisited.add(i + " " + j);
-                }
-            }
-        }
+        Cell exitCell = new Cell(x, y);
+        List<Cell> unvisited = new ArrayList<>();
+        Stack<Cell> cellStack = new Stack<>();
+        markPassagesDFSSolver(maze, sideLength, unvisited);
 
-        maze[1][1] = "WAY_OUT";
-        String currentCell = unvisited.remove(0);
+        Cell currentCell = unvisited.remove(0);
         while (true) {
-            if (exitCell.equals(currentCell)) {
+            if (currentCell.x == exitCell.x && currentCell.y == exitCell.y) {
+                maze[x][y] = "WAY_OUT";
                 return true;
             }
-            String[] parsedCurrentCell = currentCell.split(" ");
-            int i = Integer.parseInt(parsedCurrentCell[0]);
-            int j = Integer.parseInt(parsedCurrentCell[1]);
-            ArrayList<String> randomPickList = getNeighborsForSolver(i, j, unvisited);
+            ArrayList<Cell> randomPickList =
+                getNeighborsDFSSolver(currentCell.x, currentCell.y, unvisited);
             if (!randomPickList.isEmpty()) {
                 cellStack.add(currentCell);
-                Random random = new Random();
-                String neighbor = randomPickList.get(random.nextInt(randomPickList.size()));
-                String[] parsedNeighbor = neighbor.split(" ");
-                int k = Integer.parseInt(parsedNeighbor[0]);
-                int l = Integer.parseInt(parsedNeighbor[1]);
-                maze[k][l] = "WAY_OUT";
-                unvisited.remove(neighbor);
-                currentCell = neighbor;
+                currentCell = pickNeighbor(randomPickList, maze, currentCell, unvisited);
             } else if (!cellStack.isEmpty()) {
                 currentCell = cellStack.pop();
             } else {
@@ -57,6 +44,19 @@ public class DFSMazeSolver {
             }
 
         }
+    }
+
+    public static Cell pickNeighbor(
+        ArrayList<Cell> randomPickList,
+        String[][] maze,
+        Cell currentCell,
+        List<Cell> unvisited
+    ) {
+        Random random = new Random();
+        Cell neighbor = randomPickList.get(random.nextInt(randomPickList.size()));
+        maze[currentCell.x][currentCell.y] = "WAY_OUT";
+        unvisited.remove(neighbor);
+        return neighbor;
     }
 }
 

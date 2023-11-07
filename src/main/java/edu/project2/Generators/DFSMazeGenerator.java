@@ -1,11 +1,13 @@
 package edu.project2.Generators;
 
+import edu.project2.Cell;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Stack;
-import static edu.project2.Utility.getNeighborsForDFSGenerator;
+import static edu.project2.Utility.getNeighborsDFSGenerator;
 import static edu.project2.Utility.removeWall;
+import static edu.project2.Utility.setFieldDFSGenerator;
 
 public class DFSMazeGenerator {
     static Random random = new Random();
@@ -15,30 +17,22 @@ public class DFSMazeGenerator {
     }
 
     public static String[][] generate(int width, int height) {
-        List<String> unvisited = new ArrayList<>();
-        Stack<String> cellStack = new Stack<>();
-        String[][] maze = new String[width][height];
+        List<Cell> unvisited = new ArrayList<>();
+        Stack<Cell> cellStack = new Stack<>();
+        String[][] maze = setFieldDFSGenerator(width, height, unvisited);
 
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                if (i % 2 != 0 && j % 2 != 0) {
-                    maze[i][j] = "PASSAGE";
-                    unvisited.add((i + " " + j));
-                } else {
-                    maze[i][j] = "WALL";
-                }
-            }
-        }
+        dfs(unvisited, cellStack, maze);
+        return maze;
+    }
 
-        String currentCell = unvisited.remove(0);
+    private static void dfs(List<Cell> unvisited, Stack<Cell> cellStack, String[][] maze) {
+        Cell currentCell = unvisited.remove(0);
         while (!unvisited.isEmpty()) {
-            String[] parsedCurrentCell = currentCell.split(" ");
-            int x = Integer.parseInt(parsedCurrentCell[0]);
-            int y = Integer.parseInt(parsedCurrentCell[1]);
-            ArrayList<String> randomPickList = getNeighborsForDFSGenerator(x, y, unvisited);
+            ArrayList<Cell> randomPickList =
+                getNeighborsDFSGenerator(currentCell.x, currentCell.y, unvisited);
             if (!randomPickList.isEmpty()) {
                 cellStack.add(currentCell);
-                String neighbor = randomPickList.get(random.nextInt(randomPickList.size()));
+                Cell neighbor = randomPickList.get(random.nextInt(randomPickList.size()));
                 removeWall(currentCell, neighbor, maze);
                 unvisited.remove(neighbor);
                 currentCell = neighbor;
@@ -46,7 +40,6 @@ public class DFSMazeGenerator {
                 currentCell = cellStack.pop();
             }
         }
-        return maze;
     }
 }
 

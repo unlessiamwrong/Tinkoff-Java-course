@@ -5,6 +5,7 @@ import edu.project2.Solvers.BFSMazeSolver;
 import edu.project2.Solvers.DFSMazeSolver;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -12,7 +13,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class Project2Tests {
 
     @Test
-    public void dfsMazeGenerator_EqualsExpected_Test() {
+    public void DFSMazeGenerator_EqualsExpected_Test() {
         //Arrange
         String[][] expectedResult = {{"WALL", "WALL", "WALL"}, {"WALL", "PASSAGE", "WALL"}, {"WALL", "WALL", "WALL"}};
         int x = 3;
@@ -69,6 +70,34 @@ public class Project2Tests {
 
         Assertions.assertThrows(NumberFormatException.class, () ->
             BFSMazeSolver.solve(maze, x, y));
+
+    }
+
+    @Test
+    public void BFSSolver_BuildShortestPath_Test() {
+        //Arrange
+        String[][] maze = {{"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
+            {"WALL", "PASSAGE", "WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "WALL"},
+            {"WALL", "DESTROYED_WALL", "WALL", "WALL", "WALL", "DESTROYED_WALL", "WALL"},
+            {"WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "WALL"},
+            {"WALL", "WALL", "WALL", "WALL", "WALL", "DESTROYED_WALL", "WALL"},
+            {"WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "WALL"},
+            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}};
+
+        String[][] expectedResult = {{"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
+            {"WALL", "WAY_OUT", "WALL", "PASSAGE", "DESTROYED_WALL", "WAY_OUT", "WALL"},
+            {"WALL", "WAY_OUT", "WALL", "WALL", "WALL", "WAY_OUT", "WALL"},
+            {"WALL", "WAY_OUT", "WAY_OUT", "WAY_OUT", "WAY_OUT", "WAY_OUT", "WALL"},
+            {"WALL", "WALL", "WALL", "WALL", "WALL", "DESTROYED_WALL", "WALL"},
+            {"WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "WALL"},
+            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}};
+
+        //Act
+        boolean result = BFSMazeSolver.solve(maze, 1, 5);
+
+        //Assert
+        assertThat(result).isTrue();
+        assertThat(maze).isEqualTo(expectedResult);
 
     }
 }

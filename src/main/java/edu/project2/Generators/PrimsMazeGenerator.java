@@ -1,9 +1,14 @@
 package edu.project2.Generators;
 
-import edu.project2.Utility;
+import edu.project2.Cell;
 import java.util.List;
 import java.util.Random;
+import static edu.project2.Utility.computeWay;
+import static edu.project2.Utility.getPassagesPrimGenerator;
+import static edu.project2.Utility.getWallsPrimGenerator;
+import static edu.project2.Utility.sefFieldPrimGenerator;
 
+@SuppressWarnings("ParameterAssignment")
 public class PrimsMazeGenerator {
 
     static Random random = new Random();
@@ -13,29 +18,27 @@ public class PrimsMazeGenerator {
     }
 
     public static String[][] generate(int width, int height) {
-        String[][] maze = new String[width][height];
-
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                maze[i][j] = "WALL";
-            }
-        }
-
+        String[][] maze = sefFieldPrimGenerator(width, height);
         int x = random.nextInt(height);
         int y = random.nextInt(width);
         maze[x][y] = "PASSAGE";
-        String currentCell = x + " " + y;
-        List<String> walls = Utility.getWallsForPrimGenerator(currentCell, maze);
+        Cell currentCell = new Cell(x, y);
+
+        prim(currentCell, maze);
+        return maze;
+    }
+
+    public static void prim(Cell currentCell, String[][] maze) {
+        List<Cell> walls = getWallsPrimGenerator(currentCell, maze);
 
         while (!walls.isEmpty()) {
-            String currentWall = walls.get(random.nextInt(walls.size()));
-            List<String> cells = Utility.getPassagesForPrimGenerator(currentWall, maze);
+            Cell currentWall = walls.get(random.nextInt(walls.size()));
+            List<Cell> cells = getPassagesPrimGenerator(currentWall, maze);
             currentCell = cells.get(random.nextInt(cells.size()));
-            Utility.computeWay(currentCell, currentWall, maze);
+            computeWay(currentCell, currentWall, maze);
             currentCell = currentWall;
-            walls.addAll(Utility.getWallsForPrimGenerator(currentCell, maze));
+            walls.addAll(getWallsPrimGenerator(currentCell, maze));
             walls.remove(currentWall);
         }
-        return maze;
     }
 }
