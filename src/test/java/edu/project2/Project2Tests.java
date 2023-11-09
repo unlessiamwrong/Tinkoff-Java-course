@@ -74,7 +74,7 @@ public class Project2Tests {
     }
 
     @Test
-    public void BFSSolver_BuildShortestPath_Test() {
+    public void BFSSolver_BuildsShortestPath_Test() {
         //Arrange
         String[][] maze = {{"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
             {"WALL", "PASSAGE", "WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "WALL"},
@@ -98,6 +98,28 @@ public class Project2Tests {
         //Assert
         assertThat(result).isTrue();
         assertThat(maze).isEqualTo(expectedResult);
+
+    }
+
+    @Test
+    public void DFSolver_FindsPath_Test() {
+        //Arrange
+        String[][] maze = {{"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
+            {"WALL", "PASSAGE", "WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "WALL"},
+            {"WALL", "DESTROYED_WALL", "WALL", "WALL", "WALL", "DESTROYED_WALL", "WALL"},
+            {"WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "WALL"},
+            {"WALL", "WALL", "WALL", "WALL", "WALL", "DESTROYED_WALL", "WALL"},
+            {"WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "DESTROYED_WALL", "PASSAGE", "WALL"},
+            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}};
+
+
+        //Act
+        boolean resultOne = DFSMazeSolver.solve(maze, 3, 1);
+        boolean resultTwo = DFSMazeSolver.solve(maze, 1, 5);
+        boolean resultThree = DFSMazeSolver.solve(maze, 5, 5);
+
+        //Assert
+        assertThat(resultOne && resultTwo && resultThree).isTrue();
 
     }
 }
