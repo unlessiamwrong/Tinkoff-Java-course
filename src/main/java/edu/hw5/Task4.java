@@ -5,12 +5,13 @@ import java.util.regex.Pattern;
 
 public class Task4 {
 
+    static Pattern pattern = Pattern.compile("[~!@#$%^&*|]");
+
     private Task4() {
 
     }
 
     public static boolean validatePassword(String password) {
-        Pattern pattern = Pattern.compile("[~!@#$%^&*|]");
         Matcher matcher = pattern.matcher(password);
         return matcher.find();
     }
