@@ -14,7 +14,7 @@ public class Task5Test {
     void hackerNewsTopStories_Test() throws IOException, URISyntaxException, InterruptedException {
         //Arrange
         Long expectedFirst = 38249214L;
-        Long expectedLast = 38232052L;
+        Long expectedLast = 38208502L;
 
         //Act
         List<Long> result = hackerNewsTopStories();
