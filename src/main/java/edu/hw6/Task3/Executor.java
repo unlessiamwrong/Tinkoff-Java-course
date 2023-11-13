@@ -13,7 +13,7 @@ public class Executor {
     public static final AbstractFilter REGULAR_FILE = Files::isRegularFile;
     public static final AbstractFilter READABLE = Files::isReadable;
     public static final AbstractFilter WRITEABLE = Files::isWritable;
-    static Path path = Path.of("C:\\Users\\Вячеслав\\Tinkoff-Java-Course\\Tinkoff-Java-Course");
+
     static DirectoryStream.Filter<Path> filter = REGULAR_FILE
         .and(largerThan(11))
         .and(magicNumber(new byte[] {(byte) 0x89}));
@@ -22,7 +22,7 @@ public class Executor {
 
     }
 
-    public static DirectoryStream<Path> execute() {
+    public static DirectoryStream<Path> execute(Path path) {
         try (DirectoryStream<Path> entries = Files.newDirectoryStream(path, filter)) {
             return entries;
         } catch (IOException e) {

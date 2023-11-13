@@ -14,10 +14,10 @@ public class Task3Test {
     @Test
     void abstractFilter_Test() throws IOException {
         //Arrange
-        // current filters are in Task3.Executor
+        Path path = Path.of("C:\\Users\\Вячеслав\\Tinkoff-Java-Course\\Tinkoff-Java-Course");
 
         //Act
-        DirectoryStream<Path> result = Executor.execute();
+        DirectoryStream<Path> result = Executor.execute(path);
 
         //Assert
         assertThat(result).isNotNull();
