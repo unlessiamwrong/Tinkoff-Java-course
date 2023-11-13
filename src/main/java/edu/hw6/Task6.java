@@ -50,7 +50,7 @@ public class Task6 {
         }
 
         public static void scanPorts() {
-            for (int port = 0; port <= 49151; ++port) {
+            for (int port = 0; port <= 2000; ++port) {
                 checkPortTCP(port);
                 checkPortUDP(port);
             }
