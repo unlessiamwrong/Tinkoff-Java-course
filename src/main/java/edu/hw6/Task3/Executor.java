@@ -22,13 +22,12 @@ public class Executor {
 
     }
 
-    public static void execute() {
+    public static DirectoryStream<Path> execute() {
         try (DirectoryStream<Path> entries = Files.newDirectoryStream(path, filter)) {
-            entries.forEach(System.out::println);
+            return entries;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 }

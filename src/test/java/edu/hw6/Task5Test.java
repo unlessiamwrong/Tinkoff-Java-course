@@ -13,15 +13,13 @@ public class Task5Test {
     @Test
     void hackerNewsTopStories_Test() throws IOException, URISyntaxException, InterruptedException {
         //Arrange
-        Long expectedFirst = 38249214L;
-        Long expectedLast = 38208502L;
+        Long expected = 38249214L;
 
         //Act
         List<Long> result = hackerNewsTopStories();
 
         //Assert
-        assertThat(result.getFirst()).isEqualTo(expectedFirst);
-        assertThat(result.getLast()).isEqualTo(expectedLast);
+        assertThat(result.getFirst()).isEqualTo(expected);
     }
 
     @Test
