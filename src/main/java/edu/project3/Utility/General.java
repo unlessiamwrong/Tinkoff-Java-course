@@ -73,7 +73,7 @@ public class General {
             .collect(Collectors.toList());
     }
 
-    public static long avgResponseSize(List<String> list) {
+    public static long avgRequestSize(List<String> list) {
         long totalLength = 0;
         int count = 0;
         for (String str : list) {

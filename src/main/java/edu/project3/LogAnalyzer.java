@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
-import static edu.project3.Utility.General.avgResponseSize;
+import static edu.project3.Utility.General.avgRequestSize;
 import static edu.project3.Utility.General.finalPrint;
 import static edu.project3.Utility.General.setDateTo;
 
@@ -42,7 +42,7 @@ public class LogAnalyzer {
         File file = path.toFile();
         List<String> list = setDateTo(file, localDate);
 
-        finalPrint(fileGlob, localDate, list.size(), avgResponseSize(list), list);
+        finalPrint(fileGlob, localDate, list.size(), avgRequestSize(list), list);
 
     }
 }
