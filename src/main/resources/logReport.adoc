@@ -1,0 +1,40 @@
+==== General Info
+[cols=2]
+|====
+|Metric
+|Value
+|File(s) pass:[<br>] DateFrom pass:[<br>] RequestCount pass:[<br>] AVGResponseSize
+|logReport.adoc pass:[<br>]2010-08-31 pass:[<br>]51462 pass:[<br>]134b
+|====
+==== EndPoint
+[cols=2]
+|====
+|EndPoint
+|Amount
+|/downloads/product_1pass:[<br>]/downloads/product_2pass:[<br>]/downloads/product_3pass:[<br>]
+|30285pass:[<br>]21104pass:[<br>]73pass:[<br>]
+|====
+==== Http Method
+[cols=2]
+|====
+|Method
+|Amount
+|GETpass:[<br>]HEADpass:[<br>]
+|51379pass:[<br>]83pass:[<br>]
+|====
+==== Status Code
+[cols=2]
+|====
+|Code
+|Amount
+|404pass:[<br>]304pass:[<br>]200pass:[<br>]
+|33876pass:[<br>]13330pass:[<br>]4028pass:[<br>]
+|====
+==== IP Address
+[cols=2]
+|====
+|Address
+|Amount
+|216.46.173.126pass:[<br>]180.179.174.219pass:[<br>]204.77.168.241pass:[<br>]
+|2350pass:[<br>]1720pass:[<br>]1439pass:[<br>]
+|====
