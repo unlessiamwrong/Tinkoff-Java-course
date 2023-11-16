@@ -34,7 +34,7 @@ public class LogAnalyzerTest {
 
         //Act
         LogAnalyzer.analyze(new String[] {"java", "-jar", "nginx-log-stats.jar", "--path",
-            "src\\main\\resources\\logs.txt", "--from", "2010-08-31", "--format", "markdown"});
+            "src/main/resources/logs.txt", "--from", "2010-08-31", "--format", "markdown"});
 
         //Assert
         assertThat(file).isFile();
@@ -47,7 +47,7 @@ public class LogAnalyzerTest {
 
         //Act
         LogAnalyzer.analyze(new String[] {"java", "-jar", "nginx-log-stats.jar", "--path",
-            "src\\main\\resources\\logs.txt", "--from", "2010-08-31", "--format", "markdown"});
+            "src/main/resources/logs.txt", "--from", "2010-08-31", "--format", "markdown"});
 
         //Assert
         assertThat(Files.size(path)).isGreaterThan(10);
@@ -61,7 +61,7 @@ public class LogAnalyzerTest {
 
         //Act
         LogAnalyzer.analyze(new String[] {"java", "-jar", "nginx-log-stats.jar", "--path",
-            "src\\main\\resources\\logs.txt", "--from", "2010-08-31", "--format", "adoc"});
+            "src/main/resources/logs.txt", "--from", "2010-08-31", "--format", "adoc"});
 
         //Assert
         assertThat(Files.size(path)).isGreaterThan(10);
