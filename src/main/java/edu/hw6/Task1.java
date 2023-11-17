@@ -6,9 +6,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @SuppressWarnings("RegexpSinglelineJava")
 public class Task1 {
+
+    private final static Logger LOGGER = LogManager.getLogger();
 
     private Task1() {
 
@@ -20,7 +24,7 @@ public class Task1 {
             String text = key + ":" + value + "\r\n";
             out.write(text.getBytes());
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
 
     }
@@ -30,10 +34,10 @@ public class Task1 {
              BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                LOGGER.info(line);
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
     }
 }

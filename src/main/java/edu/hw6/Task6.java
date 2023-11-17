@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.ServerSocket;
 import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @SuppressWarnings({"MagicNumber", "RegexpSinglelineJava", "MultipleStringLiterals"})
 public class Task6 {
@@ -12,6 +14,8 @@ public class Task6 {
         public static final String ANSI_RESET = "\u001B[0m";
         public static final String ANSI_RED = "\u001B[31m";
         public static final String ANSI_GREEN = "\u001B[32m";
+
+        private final static Logger LOGGER = LogManager.getLogger();
 
         static Map<Integer, String> ports = Map.of(
             135, "EPMAP",
@@ -25,12 +29,12 @@ public class Task6 {
             try (ServerSocket serverSocket = new ServerSocket(port)) {
                 String portDescription = ports.get(port);
                 if (portDescription != null) {
-                    System.out.println(ANSI_GREEN + "TCP " + port + " " + ports.get(port) + ANSI_RESET);
+                    LOGGER.info(ANSI_GREEN + "TCP " + port + " " + ports.get(port) + ANSI_RESET);
                 } else {
-                    System.out.println(ANSI_GREEN + "TCP " + port + " UnknownUsage" + ANSI_RESET);
+                    LOGGER.info(ANSI_GREEN + "TCP " + port + " UnknownUsage" + ANSI_RESET);
                 }
             } catch (IOException e) {
-                System.out.println(ANSI_RED + "TCP " + port + " CLOSED" + ANSI_RESET);
+                LOGGER.info(ANSI_RED + "TCP " + port + " CLOSED" + ANSI_RESET);
             }
 
         }
@@ -39,12 +43,12 @@ public class Task6 {
             try (DatagramSocket serverSocket = new DatagramSocket(port)) {
                 String portDescription = ports.get(port);
                 if (portDescription != null) {
-                    System.out.println(ANSI_GREEN + "UDP " + port + " " + ports.get(port) + ANSI_RESET);
+                    LOGGER.info(ANSI_GREEN + "UDP " + port + " " + ports.get(port) + ANSI_RESET);
                 } else {
-                    System.out.println(ANSI_GREEN + "UDP " + port + " UnknownUsage" + ANSI_RESET);
+                    LOGGER.info(ANSI_GREEN + "UDP " + port + " UnknownUsage" + ANSI_RESET);
                 }
             } catch (IOException e) {
-                System.out.println(ANSI_RED + "UDP " + port + " CLOSED" + ANSI_RESET);
+                LOGGER.info(ANSI_RED + "UDP " + port + " CLOSED" + ANSI_RESET);
             }
 
         }
