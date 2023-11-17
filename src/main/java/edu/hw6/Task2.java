@@ -23,7 +23,7 @@ public class Task2 {
         String[] fileNameFormat = file.getName().split("\\W");
         String fileName = fileNameFormat[0];
         String fileFormat = "." + fileNameFormat[1];
-        Path copyFilePath = Paths.get(fileName + " - copy" + fileFormat);
+        Path copyFilePath = constructPath(fileName, fileFormat, countCopy);
         countCopy++;
         if (!copyFilePath.toFile().isFile()) {
             Files.createFile(copyFilePath);

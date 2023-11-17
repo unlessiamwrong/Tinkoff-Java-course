@@ -1,9 +1,8 @@
 package edu.hw6;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import static edu.hw6.Task1.readKey;
 import static edu.hw6.Task1.writeKey;
@@ -14,13 +13,13 @@ public class Task1Test {
     @Test
     void writeKey_Test() {
         //Arrange
-        String fileName = "DiskMap.txt";
+        String fileName = "src/main/resources/DiskMap.txt";
         String key = "Slava";
         String value = "44";
 
         //Act
         writeKey(fileName, key, value);
-        boolean result = Files.exists(Path.of("DiskMap.txt"));
+        boolean result = Files.exists(Path.of("src/main/resources/DiskMap.txt"));
 
         //Assert
         assertThat(result).isTrue();
@@ -30,16 +29,14 @@ public class Task1Test {
     @Test
     void readKey_Test() {
         //Arrange
-        ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStreamCaptor));
-        String fileName = "DiskMap.txt";
+        String fileName = "src/main/resources/DiskMap.txt";
 
         //Act
-        readKey(fileName);
+        List<String> result = readKey(fileName);
+        System.out.println(result);
 
         //Assert
-        assertThat(outputStreamCaptor.toString().indexOf("S")).isEqualTo(0);
-        assertThat(outputStreamCaptor.toString().indexOf("v")).isEqualTo(3);
+        assertThat(result.getFirst()).isEqualTo("Slava:44");
 
     }
 }

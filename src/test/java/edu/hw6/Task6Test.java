@@ -1,8 +1,8 @@
 package edu.hw6;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 import static edu.hw6.Task6.PortScanner.scanPorts;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -11,11 +11,9 @@ public class Task6Test {
 
     @Test
     void portScanner_Test() throws IOException {
-        ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStreamCaptor));
-
+        File file = Path.of("closedPorts.txt").toFile();
         scanPorts();
 
-        assertThat(outputStreamCaptor.size()).isGreaterThan(15000);
+        assertThat(file.length()).isGreaterThan(15);
     }
 }

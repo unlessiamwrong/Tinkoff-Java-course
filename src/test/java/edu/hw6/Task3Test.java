@@ -9,9 +9,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task3Test {
 
-
     @Test
-    void abstractFilter_Test(@TempDir Path tempDir){
+    void abstractFilter_Test(@TempDir Path tempDir) {
         DirectoryStream<Path> result = Executor.execute(tempDir);
 
         assertThat(result).isNotNull();
