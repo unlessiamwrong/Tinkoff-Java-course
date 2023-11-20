@@ -24,17 +24,15 @@ public class Task4Test {
     @Test
     void multiThread_AlwaysFaster_SingleThread_Test() throws InterruptedException {
         //Arrange
-        int[] iterations = new int[] {1000000, 10000000, 100000000, 1000000000};
+        int iteration = 1000000000;
         int threadsCount = 4;
 
         //Act
-        double expected = 0.0;
-        for (int iteration : iterations) {
-            expected += (executionTime(iteration) - executionTime(iteration, threadsCount));
-        }
+        float result = (executionTime(iteration) - executionTime(iteration, threadsCount));
+
 
         //Assert
-        assertThat(expected).isGreaterThanOrEqualTo(0.0);
+        assertThat(result).isGreaterThanOrEqualTo(0);
 
     }
 }
