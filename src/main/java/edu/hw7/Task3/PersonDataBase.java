@@ -1,6 +1,6 @@
 package edu.hw7.Task3;
 
-interface PersonDatabase {
+interface PersonDataBase {
     void add(Person person);
 
     void delete(int id);

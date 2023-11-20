@@ -3,7 +3,12 @@ package edu.hw7.Task4;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@SuppressWarnings("MagicNumber")
 public class MultiThread {
+
+    private MultiThread() {
+
+    }
 
     public static double multiThreadPiCount(int totalCount, int threadsCount) throws InterruptedException {
         AtomicInteger circleCount = new AtomicInteger(0);

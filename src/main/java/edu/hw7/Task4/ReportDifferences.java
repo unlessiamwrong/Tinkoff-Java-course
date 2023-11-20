@@ -5,11 +5,16 @@ import org.apache.logging.log4j.Logger;
 import static edu.hw7.Task4.MultiThread.multiThreadPiCount;
 import static edu.hw7.Task4.SingleThread.singleThreadPiCount;
 
+@SuppressWarnings("MagicNumber")
 public class ReportDifferences {
 
     private final static Logger LOGGER = LogManager.getLogger();
 
-    public static void main(String[] args) throws InterruptedException {
+    private ReportDifferences() {
+
+    }
+
+    public static void run() throws InterruptedException {
         int iterationsCount = 100000;
         LOGGER.info("Differences between SingleThread and MultiThread(MT) methods" + "\n");
         for (int i = 1; i < 5; i++) {

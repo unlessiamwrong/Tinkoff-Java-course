@@ -6,20 +6,24 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class Cache implements PersonDatabase {
+@SuppressWarnings("MagicNumber")
+public class Cache implements PersonDataBase {
 
-    private static final ReadWriteLock rwLock = new ReentrantReadWriteLock();
-    private static final Lock rLock = rwLock.readLock();
-    private static final Lock wLock = rwLock.writeLock();
-    private final Map<Integer, Person> idDB = new ConcurrentHashMap<>();
-    private final Map<String, Person> nameDB = new ConcurrentHashMap<>();
-    private final Map<String, Person> addressDB = new ConcurrentHashMap<>();
-    private final Map<String, Person> phoneDB = new ConcurrentHashMap<>();
+    private final static Logger LOGGER = LogManager.getLogger();
+    private static final ReadWriteLock RW_LOCK = new ReentrantReadWriteLock();
+    private static final Lock R_LOCK = RW_LOCK.readLock();
+    private static final Lock W_LOCK = RW_LOCK.writeLock();
+    private static final Map<Integer, Person> ID_DB = new ConcurrentHashMap<>();
+    private static final Map<String, Person> NAME_DB = new ConcurrentHashMap<>();
+    private static final Map<String, Person> ADDRESS_DB = new ConcurrentHashMap<>();
+    private static final Map<String, Person> PHONE_DB = new ConcurrentHashMap<>();
 
     public static ArrayList<Object> run() throws InterruptedException {
         var cache = new Cache();
-        var res = new ArrayList<>() {
+        var result = new ArrayList<>() {
         };
 
         Thread addRecord = new Thread(() -> {
@@ -31,11 +35,11 @@ public class Cache implements PersonDatabase {
         Thread getRecord = new Thread(() -> {
             for (int i = 1; i < 1000; i++) {
                 Person person = cache.findById(i);
-                    wLock.lock();
-                    res.add(cache.findByName(person.name()));
-                    res.add(cache.findByAddress(person.address()));
-                    res.add(cache.findByPhone(person.phone()));
-                    wLock.unlock();
+                W_LOCK.lock();
+                result.add(cache.findByName(person.name()));
+                result.add(cache.findByAddress(person.address()));
+                result.add(cache.findByPhone(person.phone()));
+                W_LOCK.unlock();
 
             }
         });
@@ -46,69 +50,69 @@ public class Cache implements PersonDatabase {
             addRecord.join();
             getRecord.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.info(e.getMessage());
         }
-        return res;
+        return result;
     }
 
     @Override
     public synchronized void add(Person person) {
-        rLock.lock();
-        idDB.put(person.id(), person);
-        nameDB.put(person.name(), person);
-        addressDB.put(person.address(), person);
-        phoneDB.put(person.phone(), person);
-        rLock.unlock();
+        R_LOCK.lock();
+        ID_DB.put(person.id(), person);
+        NAME_DB.put(person.name(), person);
+        ADDRESS_DB.put(person.address(), person);
+        PHONE_DB.put(person.phone(), person);
+        R_LOCK.unlock();
     }
 
     @Override
     public synchronized void delete(int id) {
-        rLock.lock();
-        Person person = idDB.get(id);
-        idDB.remove(id);
-        nameDB.remove(person.name());
-        addressDB.remove(person.address());
-        phoneDB.remove(person.phone());
-        rLock.unlock();
+        R_LOCK.lock();
+        Person person = ID_DB.get(id);
+        ID_DB.remove(id);
+        NAME_DB.remove(person.name());
+        ADDRESS_DB.remove(person.address());
+        PHONE_DB.remove(person.phone());
+        R_LOCK.unlock();
     }
 
     @Override
     public synchronized Person findById(int id) {
-        wLock.lock();
+        W_LOCK.lock();
         try {
-            return idDB.get(id);
+            return ID_DB.get(id);
         } finally {
-            wLock.unlock();
+            W_LOCK.unlock();
         }
     }
 
     @Override
     public synchronized Person findByName(String name) {
-        wLock.lock();
+        W_LOCK.lock();
         try {
-            return nameDB.get(name);
+            return NAME_DB.get(name);
         } finally {
-            wLock.unlock();
+            W_LOCK.unlock();
         }
     }
 
     @Override
     public synchronized Person findByAddress(String address) {
-        wLock.lock();
+        W_LOCK.lock();
         try {
-            return addressDB.get(address);
+            return ADDRESS_DB.get(address);
         } finally {
-            wLock.unlock();
+            W_LOCK.unlock();
         }
     }
 
     @Override
     public synchronized Person findByPhone(String phone) {
-        wLock.lock();
+        W_LOCK.lock();
         try {
-            return phoneDB.get(phone);
+            return PHONE_DB.get(phone);
         } finally {
-            wLock.unlock();
+            W_LOCK.unlock();
         }
     }
 }
