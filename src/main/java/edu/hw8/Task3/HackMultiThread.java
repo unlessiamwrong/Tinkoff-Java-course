@@ -11,7 +11,7 @@ public class HackMultiThread {
     private static final int PASSWORD_GENERATION_LENGTH = 4;
     private static final Logger LOGGER = LogManager.getLogger();
     private final ConcurrentHashMap<String, String> passwords = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<String, String> result = new ConcurrentHashMap<>();
+    public final ConcurrentHashMap<String, String> result = new ConcurrentHashMap<>(); // made public for tests
     private final Thread[] threads;
 
     public HackMultiThread(Map<String, String> map, int threadsCount) {

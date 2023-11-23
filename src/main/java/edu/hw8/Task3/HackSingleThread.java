@@ -11,7 +11,7 @@ public class HackSingleThread {
     private static final int PASSWORD_GENERATION_LENGTH = 4;
     private static final Logger LOGGER = LogManager.getLogger();
     private final HashMap<String, String> passwords = new HashMap<>();
-    private final HashMap<String, String> result = new HashMap<>();
+    public final HashMap<String, String> result = new HashMap<>(); // made public for tests
 
     public HackSingleThread(Map<String, String> map) {
         for (String key : map.keySet()) {
