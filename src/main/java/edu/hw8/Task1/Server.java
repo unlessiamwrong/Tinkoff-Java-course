@@ -20,10 +20,13 @@ public class Server {
     private static final int BUFFER_SIZE = 1024;
     private static Selector selector = null;
 
-    public static void main(String[] args) {
+    private Server() {
+
+    }
+
+    public static void serverRun(int port) {
 
         try {
-            int port = 10245;
             InetAddress hostIP = InetAddress.getLocalHost();
             selector = Selector.open();
             ServerSocketChannel socket = ServerSocketChannel.open();

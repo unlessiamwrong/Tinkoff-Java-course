@@ -17,6 +17,10 @@ public class DataBase {
         "Do one thing every day that scares you."
     );
 
+    private DataBase() {
+
+    }
+
     public static String get(String key) {
         return DB.get(key);
 

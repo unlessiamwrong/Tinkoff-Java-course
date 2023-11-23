@@ -15,6 +15,10 @@ public class Client {
     private final static Logger LOGGER = LogManager.getLogger();
     private static final int BUFFER_SIZE = 1024;
 
+    private Client() {
+
+    }
+
     public static void clientRun(int port) {
         try {
             InetAddress hostIP = InetAddress.getLocalHost();
@@ -30,6 +34,7 @@ public class Client {
 
                 ByteBuffer responseBuffer = ByteBuffer.allocate(BUFFER_SIZE);
                 client.read(responseBuffer);
+                responseBuffer.flip();
                 String response = new String(responseBuffer.array()).trim();
                 message(response);
                 input = readInput();
