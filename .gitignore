@@ -30,3 +30,7 @@ build/
 
 ### VS Code ###
 .vscode/
+/src/main/resources/DiskMap.txt
+/src/main/resources/DiskMap - copy.txt
+/test.png
+/test.txt
