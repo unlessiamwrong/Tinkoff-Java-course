@@ -8,8 +8,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings({"MagicNumber", "MultipleStringLiterals"})
-public class StatusCodeMd {
+@SuppressWarnings({"MagicNumber", "MultipleStringLiterals"}) public class StatusCodeMd {
 
     private final File file;
     private final Map<String, Integer> statusCodes;

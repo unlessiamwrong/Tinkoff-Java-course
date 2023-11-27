@@ -7,8 +7,7 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.List;
 
-@SuppressWarnings({"MagicNumber", "MultipleStringLiterals"})
-public class GeneralInfoMd {
+@SuppressWarnings({"MagicNumber", "MultipleStringLiterals"}) public class GeneralInfoMd {
 
     private final File file;
     private final List<String> logs;

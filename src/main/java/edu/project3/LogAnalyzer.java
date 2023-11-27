@@ -6,8 +6,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
 
-@SuppressWarnings("MagicNumber")
-public class LogAnalyzer {
+@SuppressWarnings("MagicNumber") public class LogAnalyzer {
 
     private LogAnalyzer() {
 

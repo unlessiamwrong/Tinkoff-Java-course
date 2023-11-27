@@ -7,8 +7,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("MultipleStringLiterals")
-public class TopThree {
+@SuppressWarnings("MultipleStringLiterals") public class TopThree {
 
     private final File file;
     private final Map<String, Integer> logs;

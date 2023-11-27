@@ -7,8 +7,7 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.List;
 
-@SuppressWarnings("MultipleStringLiterals")
-public class GeneralInfoAdoc {
+@SuppressWarnings("MultipleStringLiterals") public class GeneralInfoAdoc {
 
     private final File file;
     private final List<String> logs;

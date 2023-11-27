@@ -8,8 +8,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("MagicNumber")
-public class EndPointsMd {
+@SuppressWarnings("MagicNumber") public class EndPointsMd {
 
     private final File file;
     private final Map<String, Integer> endPoints;
