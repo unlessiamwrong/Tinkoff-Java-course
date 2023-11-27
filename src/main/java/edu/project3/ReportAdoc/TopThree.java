@@ -4,19 +4,25 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Map;
-import static edu.project3.Utility.General.getTopThreeValues;
 
 @SuppressWarnings("MultipleStringLiterals")
 public class TopThree {
 
-    private TopThree() {
+    private final File file;
+    private final Map<String, Integer> logs;
+    private final List<String> topThree;
+
+    TopThree(File file, Map<String, Integer> logs, List<String> topThree) {
+        this.file = file;
+        this.logs = logs;
+        this.topThree = topThree;
 
     }
 
-    public static void topThreePrint(File file, Map<String, Integer> logs) throws IOException {
+    public void run() throws IOException {
         PrintWriter out = new PrintWriter(new FileWriter(file, true));
-        var topThree = getTopThreeValues(logs);
         out.print("|" + topThree.get(0) + "pass:[<br>]");
         for (int i = 1; i < topThree.size(); i++) {
             out.print(topThree.get(i) + "pass:[<br>]");

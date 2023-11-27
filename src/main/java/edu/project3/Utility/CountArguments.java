@@ -5,14 +5,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class CountArguments {
 
-    private CountArguments() {
+    private static final int TOP_THREE = 3;
 
+    private final List<String> logs;
+
+    public CountArguments(List<String> logs) {
+        this.logs = logs;
     }
 
-    public static Map<String, Integer> httpMethodCount(List<String> logs) {
+    public Map<String, Integer> httpMethodCount() {
         Map<String, Integer> result = new HashMap<>();
         for (String log : logs) {
             Pattern pattern = Pattern.compile("\"[A-Z]{3,}");
@@ -25,7 +30,7 @@ public class CountArguments {
         return result;
     }
 
-    public static Map<String, Integer> endPointCount(List<String> logs) {
+    public Map<String, Integer> endPointCount() {
         Map<String, Integer> result = new HashMap<>();
         for (String log : logs) {
             Pattern pattern = Pattern.compile("\\s(/[\\w/]+)");
@@ -39,7 +44,7 @@ public class CountArguments {
         return result;
     }
 
-    public static Map<String, Integer> statusCodeCount(List<String> logs) {
+    public Map<String, Integer> statusCodeCount() {
         Map<String, Integer> result = new HashMap<>();
         for (String log : logs) {
             Pattern pattern = Pattern.compile("\\s\\d[123450]{2}\\s");
@@ -53,7 +58,7 @@ public class CountArguments {
         return result;
     }
 
-    public static Map<String, Integer> ipAddressCount(List<String> logs) {
+    public Map<String, Integer> ipAddressCount() {
         Map<String, Integer> result = new HashMap<>();
         for (String log : logs) {
             Pattern pattern = Pattern.compile("^\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}");
@@ -65,5 +70,15 @@ public class CountArguments {
             }
         }
         return result;
+    }
+
+    public List<String> getTopThreeValues(Map<String, Integer> map) {
+        return map.entrySet()
+            .stream()
+            .sorted(Map.Entry.<String, Integer>comparingByValue()
+                .reversed())
+            .limit(TOP_THREE)
+            .map(Map.Entry::getKey)
+            .collect(Collectors.toList());
     }
 }

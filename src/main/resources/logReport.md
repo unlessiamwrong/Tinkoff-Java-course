@@ -3,33 +3,33 @@
 |:---------------:|:----------:|
 |     File(s)     |  logReport.md  |
 |    DateFrom     | 2010-08-31 |
-|  RequestCount   |   51462    |
+|  RequestCount   |   16430    |
 | AVGResponseSize |    134b    |
 
 #### EndPoint
 |       EndPoint       | Amount  |
 |:--------------------:|:-------:|
-| /downloads/product_1 |  30285  |
-| /downloads/product_2 |  21104  |
-| /downloads/product_3 |  73  |
+| /downloads/product_1 |  10160  |
+| /downloads/product_2 |  6250  |
+| /downloads/product_3 |  20  |
 
 #### HTTP Method
 | Method | Amount |
 |:------:|:------:|
-|  GET   | 51379  |
-|  HEAD   | 83  |
+|  GET   | 16414  |
+|  HEAD   | 16  |
 
 #### Status Code
 | Code | Amount |
 |:----:|:------:|
-| 404  | 33876  |
-| 304  | 13330  |
-| 200  | 4028  |
+| 404  | 11026  |
+| 304  | 4121  |
+| 200  | 1217  |
 
 #### IP-address
 |     Address     | Amount |
 |:---------------:|:------:|
-| 216.46.173.126  |  2350  |
-| 180.179.174.219  |  1720  |
-| 204.77.168.241  |  1439  |
+| 216.46.173.126  |  800  |
+| 180.179.174.219  |  636  |
+| 65.39.197.164  |  460  |
 

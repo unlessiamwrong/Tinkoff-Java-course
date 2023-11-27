@@ -1,5 +1,8 @@
 package edu.project3.Utility;
 
+import edu.project3.LogRecord;
+import edu.project3.ReportAdoc.PrintAdoc;
+import edu.project3.ReportMd.PrintMd;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -10,37 +13,43 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import static edu.project3.ReportAdoc.PrintAdoc.printAdoc;
-import static edu.project3.ReportMd.PrintMd.printMd;
 
 @SuppressWarnings("MagicNumber")
 public class General {
 
-    private General() {
+    public final List<String> logs; // made public for tests
+    private final LogRecord logRecord;
+    private final File file;
+    private final long fileSize;
+
+    public General(LogRecord logRecord, File file) {
+        this.logRecord = logRecord;
+        this.file = file;
+        this.logs = setPeriod();
+        this.fileSize = avgRequestSize();
 
     }
 
-    public static void finalPrint(String glob, LocalDate dateTo, int countArguments, long fileSize, List<String> list)
-        throws IOException {
-        if (".md".equals(glob)) {
-            printMd(dateTo, countArguments, fileSize, list);
+    public void run() throws IOException {
+        if (".md".equals(logRecord.glob())) {
+            PrintMd printMd = new PrintMd(logRecord, logs, fileSize);
+            printMd.run();
         } else {
-            printAdoc(dateTo, countArguments, fileSize, list);
+            PrintAdoc printAdoc = new PrintAdoc(logRecord, logs, fileSize);
+            printAdoc.run();
         }
     }
 
-    public static List<String> setDateTo(File file, LocalDate period) {
+    private List<String> setPeriod() {
         List<String> result = new ArrayList<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line;
             while ((line = reader.readLine()) != null) {
                 LocalDate logDate = getRequestDate(line);
-                if (logDate.isAfter(period) || logDate.equals(period)) {
+                if (logDate.isAfter(logRecord.date()) || logDate.equals(logRecord.date())) {
                     result.add(line);
                 }
             }
@@ -50,7 +59,7 @@ public class General {
         return result;
     }
 
-    static LocalDate getRequestDate(String logString) {
+    private LocalDate getRequestDate(String logString) {
         Pattern pattern = Pattern.compile("(\\d{2}/\\w+/\\d{4}:\\d{2}:\\d{2}:\\d{2})");
         Matcher matcher = pattern.matcher(logString);
         if (matcher.find()) {
@@ -63,20 +72,10 @@ public class General {
         return null;
     }
 
-    public static List<String> getTopThreeValues(Map<String, Integer> map) {
-        return map.entrySet()
-            .stream()
-            .sorted(Map.Entry.<String, Integer>comparingByValue()
-                .reversed())
-            .limit(3)
-            .map(Map.Entry::getKey)
-            .collect(Collectors.toList());
-    }
-
-    public static long avgRequestSize(List<String> list) {
+    private long avgRequestSize() {
         long totalLength = 0;
         int count = 0;
-        for (String str : list) {
+        for (String str : logs) {
             totalLength += str.length();
             count++;
         }

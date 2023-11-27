@@ -1,13 +1,10 @@
 package edu.project3;
 
+import edu.project3.Utility.General;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.util.List;
-import static edu.project3.Utility.General.avgRequestSize;
-import static edu.project3.Utility.General.finalPrint;
-import static edu.project3.Utility.General.setDateTo;
 
 @SuppressWarnings("MagicNumber")
 public class LogAnalyzer {
@@ -17,7 +14,7 @@ public class LogAnalyzer {
     }
 
     public static void analyze(String[] args) throws IOException {
-        String filePath = args[4];
+        Path filePath = Path.of(args[4]);
         String dateFrom = "";
         String dateTo = "";
         String fileGlob = "";
@@ -37,12 +34,12 @@ public class LogAnalyzer {
             }
         }
 
-        LocalDate localDate = LocalDate.parse(dateFrom);
-        Path path = Path.of(filePath);
-        File file = path.toFile();
-        List<String> list = setDateTo(file, localDate);
+        LocalDate date = LocalDate.parse(dateFrom);
+        LogRecord logRecord = new LogRecord(fileGlob, filePath, date);
+        File file = logRecord.path().toFile();
 
-        finalPrint(fileGlob, localDate, list.size(), avgRequestSize(list), list);
+        General print = new General(logRecord, file);
+        print.run();
 
     }
 }
