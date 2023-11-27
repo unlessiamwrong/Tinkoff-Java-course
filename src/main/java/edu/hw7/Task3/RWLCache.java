@@ -1,17 +1,16 @@
 package edu.hw7.Task3;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 
 @SuppressWarnings("MagicNumber") public class RWLCache implements PersonDataBase {
 
-    private final static Logger LOGGER = LogManager.getLogger();
+
     private static final ReadWriteLock RW_LOCK = new ReentrantReadWriteLock();
     private static final Lock R_LOCK = RW_LOCK.readLock();
     private static final Lock W_LOCK = RW_LOCK.writeLock();
@@ -20,37 +19,6 @@ import org.apache.logging.log4j.Logger;
     private static final Map<String, Person> ADDRESS_DB = new HashMap<>();
     private static final Map<String, Person> PHONE_DB = new HashMap<>();
 
-    public static ArrayList<Object> run() throws InterruptedException {
-        var cache = new RWLCache();
-        var result = new ArrayList<>() {
-        };
-
-        Thread addRecord = new Thread(() -> {
-            for (int i = 1; i < 1000; i++) {
-                cache.add(new Person(i, "n" + i, "a" + i, "p" + i));
-            }
-        });
-
-        Thread getRecord = new Thread(() -> {
-            for (int i = 1; i < 1000; i++) {
-                Person person = cache.findById(i);
-                result.add(cache.findByName(person.name()));
-                result.add(cache.findByAddress(person.address()));
-                result.add(cache.findByPhone(person.phone()));
-
-            }
-        });
-        addRecord.start();
-        Thread.sleep(10);
-        getRecord.start();
-        try {
-            addRecord.join();
-            getRecord.join();
-        } catch (InterruptedException e) {
-            LOGGER.info(e.getMessage());
-        }
-        return result;
-    }
 
     @Override public void add(Person person) {
         R_LOCK.lock();
@@ -62,13 +30,13 @@ import org.apache.logging.log4j.Logger;
     }
 
     @Override public void delete(int id) {
-        R_LOCK.lock();
+        W_LOCK.lock();
         Person person = ID_DB.get(id);
         ID_DB.remove(id);
         NAME_DB.remove(person.name());
         ADDRESS_DB.remove(person.address());
         PHONE_DB.remove(person.phone());
-        R_LOCK.unlock();
+        W_LOCK.unlock();
     }
 
     @Override public Person findById(int id) {
