@@ -1,16 +1,15 @@
 package edu.hw7;
 
 import edu.hw7.Task3.Cache;
-import edu.hw7.Task3.RWLCache;
 import edu.hw7.Task3.Person;
-import org.junit.jupiter.api.Test;
+import edu.hw7.Task3.RWLCache;
 import java.util.ArrayList;
 import java.util.List;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import java.util.concurrent.CountDownLatch;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task3Test {
-
 
     @Test
     void cache_ReturnsNotNull_Test() throws InterruptedException {
@@ -41,7 +40,7 @@ public class Task3Test {
                     throw new RuntimeException(e);
                 }
                 Person person = cache.findById(finalI);
-                if(person != null) {
+                if (person != null) {
                     result.add(cache.findByName(person.name()));
                 }
             });
@@ -58,18 +57,17 @@ public class Task3Test {
                     throw new RuntimeException(e);
                 }
                 Person person = cache.findById(finalI);
-                if(person != null) {
+                if (person != null) {
                     result.add(cache.findByAddress(person.address()));
                 }
             });
             threadsGetByAddress[i].start();
         }
-        for(int i = 0; i < threadsAdd.length; i++){
+        for (int i = 0; i < threadsAdd.length; i++) {
             threadsAdd[i].join();
             threadsGetByName[i].join();
             threadsGetByAddress[i].join();
         }
-
 
         //Assert
         assertThat(result).isNotNull();
@@ -104,7 +102,7 @@ public class Task3Test {
                     throw new RuntimeException(e);
                 }
                 Person person = rwlCache.findById(finalI);
-                if(person != null) {
+                if (person != null) {
                     result.add(rwlCache.findByName(person.name()));
                 }
             });
@@ -121,13 +119,13 @@ public class Task3Test {
                     throw new RuntimeException(e);
                 }
                 Person person = rwlCache.findById(finalI);
-                if(person != null) {
+                if (person != null) {
                     result.add(rwlCache.findByAddress(person.address()));
                 }
             });
             threadsGetByAddress[i].start();
         }
-        for(int i = 0; i < threadsAdd.length; i++){
+        for (int i = 0; i < threadsAdd.length; i++) {
             threadsAdd[i].join();
             threadsGetByName[i].join();
             threadsGetByAddress[i].join();

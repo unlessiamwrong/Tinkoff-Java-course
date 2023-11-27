@@ -3,15 +3,12 @@ package edu.hw7.Task3;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-
 @SuppressWarnings("MagicNumber") public class Cache implements PersonDataBase {
-
 
     private static final Map<Integer, Person> ID_DB = new ConcurrentHashMap<>();
     private static final Map<String, Person> NAME_DB = new ConcurrentHashMap<>();
     private static final Map<String, Person> ADDRESS_DB = new ConcurrentHashMap<>();
     private static final Map<String, Person> PHONE_DB = new ConcurrentHashMap<>();
-
 
     @Override public synchronized void add(Person person) {
         ID_DB.put(person.id(), person);

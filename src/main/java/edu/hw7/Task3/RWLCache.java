@@ -1,15 +1,12 @@
 package edu.hw7.Task3;
 
 import java.util.HashMap;
-
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-
 @SuppressWarnings("MagicNumber") public class RWLCache implements PersonDataBase {
-
 
     private static final ReadWriteLock RW_LOCK = new ReentrantReadWriteLock();
     private static final Lock R_LOCK = RW_LOCK.readLock();
@@ -18,7 +15,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
     private static final Map<String, Person> NAME_DB = new HashMap<>();
     private static final Map<String, Person> ADDRESS_DB = new HashMap<>();
     private static final Map<String, Person> PHONE_DB = new HashMap<>();
-
 
     @Override public void add(Person person) {
         R_LOCK.lock();
