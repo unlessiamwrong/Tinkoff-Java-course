@@ -30,5 +30,7 @@ build/
 
 ### VS Code ###
 .vscode/
-/logReport.adoc
-/logReport.md
+/src/main/resources/DiskMap.txt
+/src/main/resources/DiskMap - copy.txt
+/test.png
+/test.txt
