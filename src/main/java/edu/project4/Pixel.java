@@ -1,4 +1,4 @@
-package edu.project3;
+package edu.project4;
 
 public class Pixel {
 
@@ -6,4 +6,5 @@ public class Pixel {
     int blue;
     int green;
     int counter;
+    double normal;
 }
