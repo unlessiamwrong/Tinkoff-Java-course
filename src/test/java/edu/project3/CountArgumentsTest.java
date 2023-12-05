@@ -16,7 +16,7 @@ public class CountArgumentsTest {
     private final LocalDate date = LocalDate.parse("2010-08-31");
     private final LogRecord logRecord = new LogRecord(".md", path, date);
 
-    private final General general = new General(logRecord, file);
+    private final General general = new General(file, logRecord);
 
     private final CountArguments countArguments = new CountArguments(general.logs);
 

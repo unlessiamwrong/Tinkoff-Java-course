@@ -37,7 +37,7 @@ import java.time.LocalDate;
         LogRecord logRecord = new LogRecord(fileGlob, filePath, date);
         File file = logRecord.path().toFile();
 
-        General print = new General(logRecord, file);
+        General print = new General(file, logRecord);
         print.run();
 
     }

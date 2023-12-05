@@ -24,7 +24,7 @@ public class General {
     private final File file;
     private final long fileSize;
 
-    public General(LogRecord logRecord, File file) {
+    public General(File file, LogRecord logRecord) {
         this.logRecord = logRecord;
         this.file = file;
         this.logs = setPeriod();
