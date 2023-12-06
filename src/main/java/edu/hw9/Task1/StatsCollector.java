@@ -25,10 +25,9 @@ public class StatsCollector {
                 min = value;
             }
             sum += value;
-            }
+        }
         stats.add(new Stat(name, sum, sum / values.length, max, min));
     }
-
 
     public ArrayList<Stat> stats() {
         return new ArrayList<>(stats);
