@@ -16,16 +16,18 @@ import org.apache.logging.log4j.Logger;
 
 public class Server {
 
-    private static final Logger LOGGER = LogManager.getLogger();
-    private static final int BUFFER_SIZE = 1024;
-    private static Selector selector = null;
+    private final DataBase dataBase = new DataBase();
+    private final static Logger LOGGER = LogManager.getLogger();
+    private final static int BUFFER_SIZE = 1024;
+    private final int port;
+    private Selector selector = null;
 
-    private Server() {
+    public Server(int port) {
 
+        this.port = port;
     }
 
-    public static void serverRun(int port) {
-
+    public void serverRun() {
         try {
             InetAddress hostIP = InetAddress.getLocalHost();
             selector = Selector.open();
@@ -56,20 +58,20 @@ public class Server {
         }
     }
 
-    private static void processAcceptEvent(ServerSocketChannel socket) throws IOException {
+    private void processAcceptEvent(ServerSocketChannel socket) throws IOException {
         SocketChannel client = socket.accept();
         client.configureBlocking(false);
         client.register(selector, SelectionKey.OP_READ);
     }
 
-    private static void processReadEvent(SelectionKey key) throws IOException {
+    private void processReadEvent(SelectionKey key) throws IOException {
         SocketChannel client = (SocketChannel) key.channel();
         ByteBuffer requestBuffer = ByteBuffer.allocate(BUFFER_SIZE);
         client.read(requestBuffer);
         String request = new String(requestBuffer.array()).trim();
 
         if (!request.isEmpty()) {
-            String value = request.toUpperCase() + ": " + DataBase.get(request);
+            String value = request.toUpperCase() + ": " + dataBase.get(request);
             ByteBuffer responseBuffer = ByteBuffer.allocate(BUFFER_SIZE);
             responseBuffer.put(value.getBytes());
             responseBuffer.flip();

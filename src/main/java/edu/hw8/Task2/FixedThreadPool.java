@@ -14,7 +14,7 @@ public class FixedThreadPool implements ThreadPool {
         results = new long[threadsCount];
     }
 
-    private static long fib(long n) {
+    private long fib(long n) {
         if (n <= 1) {
             return n;
         }

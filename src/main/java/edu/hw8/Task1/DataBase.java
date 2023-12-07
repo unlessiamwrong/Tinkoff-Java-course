@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class DataBase {
 
-    private static final Map<String, String> DB = Map.of(
+    private final Map<String, String> db = Map.of(
         "fall",
         "The greatest glory in living lies not in never falling, but in rising every time we fall.",
         "talk",
@@ -17,12 +17,12 @@ public class DataBase {
         "Do one thing every day that scares you."
     );
 
-    private DataBase() {
+    public DataBase() {
 
     }
 
-    public static String get(String key) {
-        return DB.get(key);
+    public String get(String key) {
+        return db.get(key);
 
     }
 }

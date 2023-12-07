@@ -12,14 +12,16 @@ import org.apache.logging.log4j.Logger;
 
 public class Client {
 
-    private final static Logger LOGGER = LogManager.getLogger();
-    private static final int BUFFER_SIZE = 1024;
+    private final Logger logger = LogManager.getLogger();
+    private final static int BUFFER_SIZE = 1024;
 
-    private Client() {
+    private final int port;
 
+    public Client(int port) {
+        this.port = port;
     }
 
-    public static void clientRun(int port) {
+    public void clientRun() {
         try {
             InetAddress hostIP = InetAddress.getLocalHost();
             InetSocketAddress address = new InetSocketAddress(hostIP, port);
@@ -46,7 +48,7 @@ public class Client {
         }
     }
 
-    public static String readInput() {
+    private String readInput() {
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         try {
@@ -57,7 +59,7 @@ public class Client {
         }
     }
 
-    public static void message(String message) {
-        LOGGER.info(message);
+    private void message(String message) {
+        logger.info(message);
     }
 }

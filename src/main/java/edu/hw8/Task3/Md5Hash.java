@@ -5,13 +5,13 @@ import java.security.NoSuchAlgorithmException;
 
 public class Md5Hash {
 
-    private static final int HEX_255 = 0xff;
+    private final static int HEX_255 = 0xff;
 
-    private Md5Hash() {
+    public Md5Hash() {
 
     }
 
-    public static String get(String source) {
+    public String get(String source) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(source.getBytes());
@@ -22,7 +22,7 @@ public class Md5Hash {
         }
     }
 
-    private static String bytesToHex(byte[] bytes) {
+    private String bytesToHex(byte[] bytes) {
         StringBuilder builder = new StringBuilder();
         for (byte b : bytes) {
             builder.append(String.format("%02x", b & HEX_255));
