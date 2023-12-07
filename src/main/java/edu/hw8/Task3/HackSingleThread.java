@@ -10,8 +10,8 @@ public class HackSingleThread {
 
     private static final int PASSWORD_GENERATION_LENGTH = 4;
     private static final Logger LOGGER = LogManager.getLogger();
-    private final HashMap<String, String> passwords = new HashMap<>();
     public final HashMap<String, String> result = new HashMap<>(); // made public for tests
+    private final HashMap<String, String> passwords = new HashMap<>();
 
     public HackSingleThread(Map<String, String> map) {
         for (String key : map.keySet()) {
@@ -22,7 +22,8 @@ public class HackSingleThread {
     private void decryptPassword() {
         while (!passwords.isEmpty()) {
             String random = RandomStringUtils.randomAlphanumeric(PASSWORD_GENERATION_LENGTH).toLowerCase();
-            String randomHash = Md5Hash.get(random);
+            Md5Hash md5Hash = new Md5Hash();
+            String randomHash = md5Hash.get(random);
             String possibleUser = passwords.get(randomHash);
             if (possibleUser != null) {
                 result.put(possibleUser, random);

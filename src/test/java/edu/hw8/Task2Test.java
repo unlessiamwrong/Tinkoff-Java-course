@@ -6,8 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task2Test {
 
-    @Test
-    void threadPool_ReturnsCorrectFib_Test() {
+    @Test void threadPool_ReturnsCorrectFib_Test() {
         //Arrange
         var fixedThreadPool = new FixedThreadPool(20);
         long expected = 4181L;

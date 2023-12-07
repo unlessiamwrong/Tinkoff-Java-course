@@ -10,8 +10,8 @@ public class HackMultiThread {
 
     private static final int PASSWORD_GENERATION_LENGTH = 4;
     private static final Logger LOGGER = LogManager.getLogger();
-    private final ConcurrentHashMap<String, String> passwords = new ConcurrentHashMap<>();
     public final ConcurrentHashMap<String, String> result = new ConcurrentHashMap<>(); // made public for tests
+    private final ConcurrentHashMap<String, String> passwords = new ConcurrentHashMap<>();
     private final Thread[] threads;
 
     public HackMultiThread(Map<String, String> map, int threadsCount) {
@@ -35,7 +35,8 @@ public class HackMultiThread {
         Thread thread = new Thread(() -> {
             while (!passwords.isEmpty()) {
                 String random = RandomStringUtils.randomAlphanumeric(PASSWORD_GENERATION_LENGTH).toLowerCase();
-                String randomHash = Md5Hash.get(random);
+                Md5Hash md5Hash = new Md5Hash();
+                String randomHash = md5Hash.get(random);
                 String possibleUser = passwords.get(randomHash);
                 if (possibleUser != null) {
                     result.put(possibleUser, random);

@@ -16,16 +16,18 @@ import org.apache.logging.log4j.Logger;
 
 public class Server {
 
-    private static final Logger LOGGER = LogManager.getLogger();
-    private static final int BUFFER_SIZE = 1024;
-    private static Selector selector = null;
+    private final DataBase dataBase = new DataBase();
+    private final Logger logger = LogManager.getLogger();
+    private final int bufferSize = 1024;
+    private final int port;
+    private Selector selector = null;
 
-    private Server() {
+    public Server(int port) {
 
+        this.port = port;
     }
 
-    public static void serverRun(int port) {
-
+    public void serverRun() {
         try {
             InetAddress hostIP = InetAddress.getLocalHost();
             selector = Selector.open();
@@ -52,25 +54,25 @@ public class Server {
             }
 
         } catch (IOException e) {
-            LOGGER.info(e.getMessage());
+            logger.info(e.getMessage());
         }
     }
 
-    private static void processAcceptEvent(ServerSocketChannel socket) throws IOException {
+    private void processAcceptEvent(ServerSocketChannel socket) throws IOException {
         SocketChannel client = socket.accept();
         client.configureBlocking(false);
         client.register(selector, SelectionKey.OP_READ);
     }
 
-    private static void processReadEvent(SelectionKey key) throws IOException {
+    private void processReadEvent(SelectionKey key) throws IOException {
         SocketChannel client = (SocketChannel) key.channel();
-        ByteBuffer requestBuffer = ByteBuffer.allocate(BUFFER_SIZE);
+        ByteBuffer requestBuffer = ByteBuffer.allocate(bufferSize);
         client.read(requestBuffer);
         String request = new String(requestBuffer.array()).trim();
 
         if (!request.isEmpty()) {
-            String value = request.toUpperCase() + ": " + DataBase.get(request);
-            ByteBuffer responseBuffer = ByteBuffer.allocate(BUFFER_SIZE);
+            String value = request.toUpperCase() + ": " + dataBase.get(request);
+            ByteBuffer responseBuffer = ByteBuffer.allocate(bufferSize);
             responseBuffer.put(value.getBytes());
             responseBuffer.flip();
             client.write(responseBuffer);

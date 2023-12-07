@@ -12,14 +12,16 @@ import org.apache.logging.log4j.Logger;
 
 public class Client {
 
-    private final static Logger LOGGER = LogManager.getLogger();
-    private static final int BUFFER_SIZE = 1024;
+    private final Logger logger = LogManager.getLogger();
+    private final int bufferSize = 1024;
 
-    private Client() {
+    private final int port;
 
+    public Client(int port) {
+        this.port = port;
     }
 
-    public static void clientRun(int port) {
+    public void clientRun() {
         try {
             InetAddress hostIP = InetAddress.getLocalHost();
             InetSocketAddress address = new InetSocketAddress(hostIP, port);
@@ -27,12 +29,12 @@ public class Client {
 
             String input = readInput();
             while (!input.isEmpty()) {
-                ByteBuffer requestBuffer = ByteBuffer.allocate(BUFFER_SIZE);
+                ByteBuffer requestBuffer = ByteBuffer.allocate(bufferSize);
                 requestBuffer.put(input.getBytes());
                 requestBuffer.flip();
                 client.write(requestBuffer);
 
-                ByteBuffer responseBuffer = ByteBuffer.allocate(BUFFER_SIZE);
+                ByteBuffer responseBuffer = ByteBuffer.allocate(bufferSize);
                 client.read(responseBuffer);
                 responseBuffer.flip();
                 String response = new String(responseBuffer.array()).trim();
@@ -46,7 +48,7 @@ public class Client {
         }
     }
 
-    public static String readInput() {
+    private String readInput() {
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         try {
@@ -57,7 +59,7 @@ public class Client {
         }
     }
 
-    public static void message(String message) {
-        LOGGER.info(message);
+    private void message(String message) {
+        logger.info(message);
     }
 }
