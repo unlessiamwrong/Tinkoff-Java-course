@@ -1,5 +1,6 @@
 package edu.project4;
 
+import edu.project4.Generation.FractalMultiThread;
 import edu.project4.Generation.FractalSingleThread;
 import edu.project4.Generation.Pixel;
 import edu.project4.Generation.Point;
@@ -13,7 +14,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Project4Test {
     @Test
-    void fractalGeneration_Test() {
+    void fractalGeneration_SingleThread_Test() {
         //Arrange
         FractalConfig config = new FractalConfig(20000, 1000, 5, "sphere");
         FractalSingleThread fst = new FractalSingleThread(1920, 1080, config);
@@ -21,6 +22,20 @@ public class Project4Test {
 
         //Act
         Pixel[][] result = fst.generate();
+
+        //Assert
+        assertThat(Arrays.deepEquals(pixels, result)).isFalse();
+    }
+
+    @Test
+    void fractalGeneration_MultiThread_Test() {
+        //Arrange
+        FractalConfig config = new FractalConfig(20000, 1000, 5, "sphere");
+        FractalMultiThread fst = new FractalMultiThread(1920, 1080, config);
+        Pixel[][] pixels = new Pixel[1920][1080];
+
+        //Act
+        Pixel[][] result = fst.generate(5);
 
         //Assert
         assertThat(Arrays.deepEquals(pixels, result)).isFalse();
