@@ -1,9 +1,9 @@
-package edu.project4.Utility;
+package edu.project4.Transformations;
 
-import edu.project4.Point;
+import edu.project4.Generation.Point;
 import java.util.Random;
 
-public class AffineTransformation {
+public class Affine {
 
     private final double c;
     private final double f;
@@ -16,7 +16,7 @@ public class AffineTransformation {
     private double d;
     private double e;
 
-    public AffineTransformation() {
+    public Affine() {
 
         f = random.nextDouble() * 2 - 1;
         c = random.nextDouble() * 2 - 1;

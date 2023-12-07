@@ -1,4 +1,4 @@
-package edu.project4;
+package edu.project4.Generation;
 
 public class Pixel {
 

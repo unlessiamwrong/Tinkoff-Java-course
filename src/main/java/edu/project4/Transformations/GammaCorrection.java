@@ -1,11 +1,11 @@
-package edu.project4.Utility;
+package edu.project4.Transformations;
 
-import edu.project4.Pixel;
+import edu.project4.Generation.Pixel;
 
 public class GammaCorrection {
 
+    private static final double GAMMA = 2.2;
     private final Pixel[][] pixels;
-
     private final int width;
     private final int height;
 
@@ -18,7 +18,6 @@ public class GammaCorrection {
 
     public Pixel[][] run() {
         double max = 0.0;
-        double gamma = 2.2;
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 Pixel currentPixel = pixels[x][y];
@@ -34,9 +33,9 @@ public class GammaCorrection {
             for (int y = 0; y < height; y++) {
                 Pixel currentPixel = pixels[x][y];
                 currentPixel.normal /= max;
-                currentPixel.red = (int) (currentPixel.red * Math.pow(currentPixel.normal, (1.0 / gamma)));
-                currentPixel.green = (int) (currentPixel.green * Math.pow(currentPixel.normal, (1.0 / gamma)));
-                currentPixel.blue = (int) (currentPixel.blue * Math.pow(currentPixel.normal, (1.0 / gamma)));
+                currentPixel.red = (int) (currentPixel.red * Math.pow(currentPixel.normal, (1.0 / GAMMA)));
+                currentPixel.green = (int) (currentPixel.green * Math.pow(currentPixel.normal, (1.0 / GAMMA)));
+                currentPixel.blue = (int) (currentPixel.blue * Math.pow(currentPixel.normal, (1.0 / GAMMA)));
             }
         }
         return pixels;
