@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 public class Client {
 
-    private final Logger logger = LogManager.getLogger();
+    private final static Logger LOGGER = LogManager.getLogger();
     private final static int BUFFER_SIZE = 1024;
 
     private final int port;
@@ -60,6 +60,6 @@ public class Client {
     }
 
     private void message(String message) {
-        logger.info(message);
+        LOGGER.info(message);
     }
 }
