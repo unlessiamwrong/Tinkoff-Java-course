@@ -23,13 +23,13 @@ public class RandomObjectGenerator {
             if (field.isAnnotationPresent(NotNull.class) && fieldType == String.class) {
                 name = generatedName;
             }
-            if (field.isAnnotationPresent(Min.class) &&
-                (Number.class.isAssignableFrom(fieldType) || fieldType.isPrimitive())) {
+            if (field.isAnnotationPresent(Min.class)
+                && (Number.class.isAssignableFrom(fieldType) || fieldType.isPrimitive())) {
                 Min minAnnotation = field.getAnnotation(Min.class);
                 left = minAnnotation.value();
             }
-            if (field.isAnnotationPresent(Max.class) &&
-                (Number.class.isAssignableFrom(fieldType) || fieldType.isPrimitive())) {
+            if (field.isAnnotationPresent(Max.class)
+                && (Number.class.isAssignableFrom(fieldType) || fieldType.isPrimitive())) {
                 Max maxAnnotation = field.getAnnotation(Max.class);
                 right = maxAnnotation.value();
 
