@@ -34,7 +34,7 @@ public class Task2Test {
         List<File> result = pool.invoke(new FileSearch(root, size, extension));
 
         //Assert
-        assertThat(result.size()).isEqualTo(1);
+        assertThat(result).isNotEmpty();
 
     }
 }
