@@ -17,7 +17,7 @@ public class Task2Test {
         // Arrange
         Summary summary = new ByteBuddy()
             .subclass(Summary.class)
-            .method(named("sum"))
+            .method(named("summary"))
             .intercept(MethodDelegation.to(new Multiply()))
             .make()
             .load(getClass().getClassLoader())
