@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class Task2Test {
 
@@ -19,7 +19,7 @@ public class Task2Test {
         List<File> result = pool.invoke(new DirSearch(root));
 
         //Assert
-        assertThat(result.size()).isEqualTo(0);
+        assertThat(result).isEmpty();
 
     }
 

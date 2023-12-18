@@ -18,12 +18,8 @@ public class StatsCollector {
         double max = minDouble;
         double min = maxDouble;
         for (double value : values) {
-            if (value > max) {
-                max = value;
-            }
-            if (value < min) {
-                min = value;
-            }
+            max = Math.max(value, max);
+            min = Math.min(value, min);
             sum += value;
         }
         stats.add(new Stat(name, sum, sum / values.length, max, min));

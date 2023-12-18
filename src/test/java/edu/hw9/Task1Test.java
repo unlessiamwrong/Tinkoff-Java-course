@@ -2,8 +2,8 @@ package edu.hw9;
 
 import edu.hw9.Task1.Stat;
 import edu.hw9.Task1.StatsCollector;
-import org.junit.jupiter.api.Test;
 import java.security.SecureRandom;
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task1Test {
