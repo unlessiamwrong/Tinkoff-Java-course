@@ -8,18 +8,17 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CacheProxy implements InvocationHandler {
 
     private final Object target;
-    private final Map<String, Long> cache;
+    private final ConcurrentHashMap<String, Long> cache;
     private final File file;
 
     public CacheProxy(Object target, File file) {
         this.target = target;
-        this.cache = new HashMap<>();
+        this.cache = new ConcurrentHashMap<>();
         this.file = file;
     }
 

@@ -19,21 +19,22 @@ public class RandomObjectGenerator {
         throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
         Constructor<T> constructor = cls.getConstructor(String.class, int.class);
         for (Field field : cls.getDeclaredFields()) {
-            if (field.isAnnotationPresent(NotNull.class) && field.getType() == String.class) {
+            var fieldType = field.getType();
+            if (field.isAnnotationPresent(NotNull.class) && fieldType == String.class) {
                 name = generatedName;
-
             }
-            if (field.isAnnotationPresent(Min.class) && field.getType() == int.class) {
+            if (field.isAnnotationPresent(Min.class) &&
+                (Number.class.isAssignableFrom(fieldType) || fieldType.isPrimitive())) {
                 Min minAnnotation = field.getAnnotation(Min.class);
                 left = minAnnotation.value();
             }
-            if (field.isAnnotationPresent(Max.class) && field.getType() == int.class) {
+            if (field.isAnnotationPresent(Max.class) &&
+                (Number.class.isAssignableFrom(fieldType) || fieldType.isPrimitive())) {
                 Max maxAnnotation = field.getAnnotation(Max.class);
                 right = maxAnnotation.value();
-            }
 
+            }
         }
         return constructor.newInstance(name, random.nextInt(left, right));
     }
 }
-
