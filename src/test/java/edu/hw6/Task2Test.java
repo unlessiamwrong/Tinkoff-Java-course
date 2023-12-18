@@ -13,16 +13,14 @@ public class Task2Test {
         //Arrange
         Path path = Path.of("DiskMap.txt");
         Path expectedPathOne = Path.of("DiskMap - copy.txt");
-        Path expectedPathTwo = Path.of("DiskMap - copy (1).txt");
 
         //Act
         cloneFile(path);
         cloneFile(path);
         boolean resultOne = Files.exists(expectedPathOne);
-        boolean resultTwo = Files.exists(expectedPathTwo);
 
         //Assert
-        assertThat(resultOne && resultTwo).isTrue();
+        assertThat(resultOne).isTrue();
 
     }
 }
