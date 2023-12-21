@@ -16,7 +16,6 @@ public class CacheProxy implements InvocationHandler {
     private final ConcurrentHashMap<String, Long> cache;
 
     private final ConcurrentHashMap<Method, Boolean> annotationCache;
-
     private final File file;
 
     public CacheProxy(Object target, File file) {
@@ -29,7 +28,7 @@ public class CacheProxy implements InvocationHandler {
     public static <T> T create(T target, Class<T> targetInterface, File file) {
         return targetInterface.cast(Proxy.newProxyInstance(
             targetInterface.getClassLoader(),
-            new Class<?>[] { targetInterface },
+            new Class<?>[] {targetInterface},
             new CacheProxy(target, file)
         ));
     }
