@@ -6,10 +6,13 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import static edu.project2.Utility.getNeighborsBFSSolver;
 
-@SuppressWarnings("MultipleStringLiterals")
-public class BFSMazeSolver {
+@SuppressWarnings("MultipleStringLiterals") public class BFSMazeSolver {
+
+    private final static int THREADS_COUNT = 4;
 
     private BFSMazeSolver() {
 
@@ -37,17 +40,23 @@ public class BFSMazeSolver {
                 BFSMazeSolver.buildPath(maze, path, exitCell);
                 return true;
             }
-            ArrayList<Cell> neighbors =
-                getNeighborsBFSSolver(currentCell.x, currentCell.y, path, maze);
+
+            ExecutorService executor = Executors.newFixedThreadPool(THREADS_COUNT);
+            ArrayList<Cell> neighbors = getNeighborsBFSSolver(currentCell.x, currentCell.y, path, maze);
             if (!neighbors.isEmpty()) {
                 for (var neighbor : neighbors) {
-                    path[neighbor.x][neighbor.y] = currentCell;
-                    queueCell.add(neighbor);
+                    executor.execute(() -> {
+                        path[neighbor.x][neighbor.y] = currentCell;
+                        queueCell.add(neighbor);
+                    });
                 }
+            }
+
+            executor.shutdown();
+            while (!executor.isTerminated()) {
             }
         }
         return false;
-
     }
 
     private static void buildPath(String[][] maze, Cell[][] path, Cell exitCell) {
