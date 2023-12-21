@@ -78,6 +78,7 @@ public class Fib {
             mv.visitInsn(Opcodes.LRETURN);
             mv.visitEnd();
             return new Size(15, 15);
+
         }
 
     }
