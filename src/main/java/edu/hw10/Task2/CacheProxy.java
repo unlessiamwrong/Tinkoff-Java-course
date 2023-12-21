@@ -14,24 +14,28 @@ public class CacheProxy implements InvocationHandler {
 
     private final Object target;
     private final ConcurrentHashMap<String, Long> cache;
+
+    private final ConcurrentHashMap<Method, Boolean> annotationCache;
+
     private final File file;
 
     public CacheProxy(Object target, File file) {
         this.target = target;
         this.cache = new ConcurrentHashMap<>();
+        this.annotationCache = new ConcurrentHashMap<>();
         this.file = file;
     }
 
-    public static <T> T create(T target, Class<? super T> targetInterface, File file) {
-        return (T) Proxy.newProxyInstance(
+    public static <T> T create(T target, Class<T> targetInterface, File file) {
+        return targetInterface.cast(Proxy.newProxyInstance(
             targetInterface.getClassLoader(),
-            new Class<?>[] {targetInterface},
+            new Class<?>[] { targetInterface },
             new CacheProxy(target, file)
-        );
+        ));
     }
 
     @Override public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        if (method.isAnnotationPresent(Cache.class)) {
+        if (isMethodCacheable(method)) {
             String key = method.getName() + Arrays.toString(args);
             if (cache.containsKey(key)) {
                 return cache.get(key);
@@ -43,6 +47,10 @@ public class CacheProxy implements InvocationHandler {
         } else {
             return method.invoke(target, args);
         }
+    }
+
+    private boolean isMethodCacheable(Method method) {
+        return annotationCache.computeIfAbsent(method, m -> m.isAnnotationPresent(Cache.class));
     }
 
     private void saveCache() throws IOException {
