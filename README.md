@@ -2,4 +2,4 @@
 
 Homework of the course: https://fintech.tinkoff.ru/academy/java
 
-Student: `Bataev Vyacheslav`
+Student: `Vyacheslav Bataev`
