@@ -20,9 +20,11 @@
     </licenses>
 
     <properties>
+        <bytebuddy.version>1.14.8</bytebuddy.version>
+        <asm.version>9.6</asm.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
+        <jmh.version>1.37</jmh.version>
         <maven.version>3.8.8</maven.version>
         <jdk.version>21</jdk.version>
         <java.release>21</java.release>
@@ -73,6 +75,7 @@
             <artifactId>asm</artifactId>
             <version>${asm.version}</version>
         </dependency>
+
         <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy-agent</artifactId>
